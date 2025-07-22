@@ -1,4 +1,5 @@
 ﻿using ApiBin_01;
+//https://www.binance.com/uk-UA/binance-api
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 Console.InputEncoding = System.Text.Encoding.UTF8;
