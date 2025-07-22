@@ -1,6 +1,8 @@
 ﻿namespace ApiBin_01;
 
 using Microsoft.Extensions.Configuration;
+using Serilog;
+
 
 
 
@@ -8,6 +10,12 @@ public class ProgramApiGetSecret{
     public async Task Run(){
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.InputEncoding = System.Text.Encoding.UTF8;
+        
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+
 
 // Завантаження конфігурації з user-secrets
         var configuration = new ConfigurationBuilder()
@@ -17,17 +25,12 @@ public class ProgramApiGetSecret{
 // Отримання ключів
         string? apiKey = configuration["BinanceApiKey"];
         string? apiSecret = configuration["BinanceApiSecret"];
-
-// Перевірка наявності ключів
+        
         if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret)){
-            Console.WriteLine("API ключ або секрет не знайдено в user-secrets.");
-            Console.WriteLine("Будь ласка, налаштуйте їх за допомогою команд:");
-            Console.WriteLine("dotnet user-secrets set \"BinanceApiKey\" \"your_api_key_here\"");
-            Console.WriteLine("dotnet user-secrets set \"BinanceApiSecret\" \"your_api_secret_here\"");
+            Log.Error("API ключ або секрет не знайдено в user-secrets");
             return;
         }
-
-        Console.WriteLine("Секретні ключі успішно завантажено.");
+        Log.Information("Секретні ключі успішно завантажено");
         
         
         

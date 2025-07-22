@@ -5,8 +5,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-      <UserSecretsId>694df782-0dbb-4e4c-87d0-a11ca819a4f9</UserSecretsId>
-      <RootNamespace>ApiBin_01</RootNamespace>
+      <UserSecretsId>ffd1010e-660e-4f75-8366-e40eecc25a2a</UserSecretsId>
   </PropertyGroup>
 
     <ItemGroup>

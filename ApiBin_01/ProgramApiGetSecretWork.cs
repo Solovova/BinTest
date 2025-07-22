@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 
 namespace ApiBin_01;
 
@@ -75,14 +76,14 @@ internal class ProgramApiGetSecretWork
 
             if (accountInfo?.Balances != null)
             {
-                Console.WriteLine("Активи з ненульовим балансом:");
+                Log.Information("Активи з ненульовим балансом:");
                 var nonZeroBalances = accountInfo.Balances
                     .Where(b => decimal.Parse(b.Free, CultureInfo.InvariantCulture) > 0 ||
                                 decimal.Parse(b.Locked, CultureInfo.InvariantCulture) > 0);
 
                 foreach (var balance in nonZeroBalances)
                 {
-                    Console.WriteLine($"  - Актив: {balance.Asset}, Доступно: {balance.Free}, Заблоковано: {balance.Locked}");
+                    Log.Information("Актив: {BalanceAsset}, Доступно: {BalanceFree}, Заблоковано: {BalanceLocked}", balance.Asset, balance.Free, balance.Locked);
                 }
             }
         }

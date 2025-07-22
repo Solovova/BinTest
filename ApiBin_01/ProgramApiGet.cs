@@ -1,21 +1,22 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ApiBin_01;
 
 internal class ProgramApiGet{
     public class PriceInfo{
-        // ReSharper disable once InconsistentNaming
-        public string? symbol{ get; set; }
+        [JsonPropertyName("symbol")]
+        public string? Symbol{ get; init; }
 
-        // ReSharper disable once InconsistentNaming
-        public string? price{ get; set; }
+        [JsonPropertyName("price")]
+        public string? Price{ get; init; }
     }
 
     async Task<string> GetPrice(){
         using (var httpClient = new HttpClient()){
-            string baseUrl = "https://api.binance.com";
-            string endpoint = "/api/v3/ticker/price?symbol=BTCUSDT";
-            string url = baseUrl + endpoint;
+            const string baseUrl = "https://api.binance.com";
+            const string endpoint = "/api/v3/ticker/price?symbol=BTCUSDT";
+            const string url = baseUrl + endpoint;
 
             HttpResponseMessage response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
@@ -29,10 +30,10 @@ internal class ProgramApiGet{
         string json = await GetPrice();
         Console.WriteLine(json);
         PriceInfo? info = JsonSerializer.Deserialize<PriceInfo>(json);
-        Console.WriteLine($"Символ: {info!.symbol}");
-        Console.WriteLine($"Ціна: {info.price}");
+        Console.WriteLine($"Символ: {info!.Symbol}");
+        Console.WriteLine($"Ціна: {info.Price}");
 
-        decimal price = decimal.Parse(info.price ?? throw new InvalidOperationException(),
+        decimal price = decimal.Parse(info.Price ?? throw new InvalidOperationException(),
             System.Globalization.CultureInfo.InvariantCulture);
         Console.WriteLine($"Ціна: {price}");
     }
