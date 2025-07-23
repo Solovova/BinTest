@@ -39,6 +39,10 @@ internal class ProgramApiGetSecretWork
         _apiSecret = apiSecret;
         _httpClient = new HttpClient();
         // Додаємо API ключ в заголовок для всіх запитів
+        Log.Information(_apiKey);
+        Log.Information(_apiSecret);
+        _httpClient.DefaultRequestHeaders.Remove("X-MBX-APIKEY");
+
         _httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", _apiKey);
     }
 
@@ -58,13 +62,15 @@ internal class ProgramApiGetSecretWork
 
         const string endpoint = "/api/v3/account";
         long timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+        //var recvWindow = "5000";
+        //string queryString = $"timestamp={timestamp}&recvWindow={recvWindow}";
         string queryString = $"timestamp={timestamp}";
         
         // Створюємо підпис
         string signature = CreateSignature(queryString);
 
         string url = $"{BaseUrl}{endpoint}?{queryString}&signature={signature}";
-
+        Log.Information(url);
         try
         {
             HttpResponseMessage response = await _httpClient.GetAsync(url);
