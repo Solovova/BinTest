@@ -41,9 +41,16 @@ internal class ProgramApiGetSecretWork
         // Додаємо API ключ в заголовок для всіх запитів
         Log.Information(_apiKey);
         Log.Information(_apiSecret);
-        _httpClient.DefaultRequestHeaders.Remove("X-MBX-APIKEY");
+        //_httpClient.DefaultRequestHeaders.Remove("X-MBX-APIKEY");
+        _httpClient.DefaultRequestHeaders.Clear();
 
         _httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", _apiKey);
+        Console.WriteLine("Request Headers:");
+        foreach (var header in _httpClient.DefaultRequestHeaders)
+        {
+            Console.WriteLine($"{header.Key}: {string.Join(", ", header.Value)}");
+        }
+
     }
 
     private string CreateSignature(string queryString)
@@ -55,6 +62,9 @@ internal class ProgramApiGetSecretWork
         // Конвертуємо хеш в рядок шістнадцяткового формату
         return BitConverter.ToString(hash).Replace("-", "").ToLower();
     }
+    
+
+
     
     public async Task GetAccountBalanceAsync()
     {
