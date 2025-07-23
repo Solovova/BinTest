@@ -1,9 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using ApiService;
 
-using Serilog;
-using SoloTrader;
-
-var mainProvider = new MainProvider();
+//var mainProvider = new MainProvider();
 
 
 // Отримуємо інформацію про біржу
@@ -14,3 +11,13 @@ var mainProvider = new MainProvider();
 // var accountInfo = await mainProvider.BinanceService.GetAccountInfoAsync();
 // Log.Information("Account Info отримано успішно!");
 // Console.WriteLine(accountInfo); 
+
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.InputEncoding = System.Text.Encoding.UTF8;
+
+ApiServices apiServices = new ApiServices();
+apiServices.AddApiService("binance");
+
+await apiServices.GetApiService("binance").GetSym();
+await apiServices.GetApiService("binance").GetAccountBalanceAsync();
+Console.WriteLine(apiServices.GetApiService("binance").Name);

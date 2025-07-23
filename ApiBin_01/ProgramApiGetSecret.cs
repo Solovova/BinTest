@@ -30,7 +30,7 @@ public class ProgramApiGetSecret{
             Log.Error("API ключ або секрет не знайдено в user-secrets");
             return;
         }
-        Log.Information("Секретні ключі успішно завантажено");
+        Log.Information("Секретні ключі успішно завантажено1");
         
         
         

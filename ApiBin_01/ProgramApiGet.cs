@@ -1,15 +1,16 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ApiBin_01;
 
 internal class ProgramApiGet{
     public class PriceInfo{
-        [JsonPropertyName("symbol")]
-        public string? Symbol{ get; init; }
+        [JsonPropertyName("symbol")] public string Symbol{ get; init; } = string.Empty;
 
         [JsonPropertyName("price")]
-        public string? Price{ get; init; }
+        public string PriceString{ get; init; } = string.Empty;
+        public decimal Price => decimal.Parse(PriceString, CultureInfo.InvariantCulture);
     }
 
     async Task<string> GetPrice(){
@@ -32,10 +33,6 @@ internal class ProgramApiGet{
         PriceInfo? info = JsonSerializer.Deserialize<PriceInfo>(json);
         Console.WriteLine($"Символ: {info!.Symbol}");
         Console.WriteLine($"Ціна: {info.Price}");
-
-        decimal price = decimal.Parse(info.Price ?? throw new InvalidOperationException(),
-            System.Globalization.CultureInfo.InvariantCulture);
-        Console.WriteLine($"Ціна: {price}");
     }
 
     public async Task Run(){
