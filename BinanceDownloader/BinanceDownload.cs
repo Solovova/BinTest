@@ -15,21 +15,34 @@ public class BinanceDownload{
         }
     }
 
-    public async Task Download(List<string> symbolsTop100, List<DateInfo> dates){
+    public async Task Download(string symbol, DateInfo dateInfo){
+        string url = BinanceFileNameUrl.GetUrl(dateInfo, symbol);
+        string downloadPath = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
+
+        Directory.CreateDirectory(Path.GetDirectoryName(downloadPath) ?? throw new InvalidOperationException());
+
+        if (File.Exists(downloadPath)){
+            Log.Information("Файл вже скачаний {DownloadPath}", downloadPath);
+        }
+        else{
+            await DownloadFileAsync(url, downloadPath);
+        }
+    }
+
+    public async Task DownloadMany(List<string> symbolsTop100, List<DateInfo> dates){
+        var tasks = new List<Task>();
         foreach (var symbol in symbolsTop100){
             foreach (var dateInfo in dates){
-                string url = BinanceFileNameUrl.GetUrl(dateInfo, symbol);
-                string downloadPath = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
-
-                Directory.CreateDirectory(Path.GetDirectoryName(downloadPath) ?? throw new InvalidOperationException());
-
-                if (File.Exists(downloadPath)){
-                    Log.Information("Файл вже скачаний {DownloadPath}", downloadPath);
+                if (tasks.Count < 5){
+                    tasks.Add(Download(symbol, dateInfo));
                 }
                 else{
-                    await DownloadFileAsync(url, downloadPath);
+                    await Task.WhenAll(tasks);
+                    tasks.Clear();
                 }
             }
         }
+
+        await Task.WhenAll(tasks);
     }
 }

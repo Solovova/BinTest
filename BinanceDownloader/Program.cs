@@ -27,4 +27,4 @@ var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
 var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));
 
 var binanceDownload = new BinanceDownload();
-await binanceDownload.Download(symbolsTop100, dates);
+await binanceDownload.DownloadMany(symbolsTop100, dates);
