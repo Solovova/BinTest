@@ -5,15 +5,13 @@ namespace BinanceDownloader;
 using System.IO.Compression;
 
 public class BinanceCsvToBase{
-    public static string ExtractFile(string symbol, DateInfo dateInfo){
-        string toDir = "D:\\Downloads\\CSV\\";
-        string nameOfArchive = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
+    public static string ExtractFile(string toDir, string nameOfArchive){
         string lastFullPath = String.Empty;
         try{
             // Створюємо директорію призначення, якщо її не існує
             Directory.CreateDirectory(toDir);
 
-            
+
             using (var archive = ZipFile.OpenRead(nameOfArchive)){
                 foreach (ZipArchiveEntry entry in archive.Entries){
                     // Створюємо повний шлях для файлу
@@ -35,19 +33,35 @@ public class BinanceCsvToBase{
             }
 
             Log.Information("Архів успішно розпаковано: {ArchivePath}", nameOfArchive);
-            
         }
         catch (Exception ex){
             Log.Error(ex, "Помилка при розархівуванні файлу: {ArchivePath}", nameOfArchive);
             //throw;
         }
+
         return lastFullPath;
     }
 
-    public static void ExtractMany(List<string> symbolsTop100, List<DateInfo> dates){
+    public static async Task ExtractMany(List<string> symbolsTop100, List<DateInfo> dates){
+        var progress = new Progress<double>(percent =>
+            Console.WriteLine($"Прогрес: {percent:F2}%"));
+        var connectionString = "Host=localhost;Database=binance;Username=user;Password=password";
+        var loader = new BananceCVVToPostgree(connectionString, Log.Logger);
+
         foreach (var symbol in symbolsTop100){
             foreach (var dateInfo in dates){
-                ExtractFile(symbol, dateInfo);
+                string toDir = "D:\\Downloads\\CSV\\";
+                string nameOfArchive = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
+                if (File.Exists(nameOfArchive)){
+                    string nameOfFile = ExtractFile(toDir, nameOfArchive);
+
+                    await loader.LoadCsvFile(
+                        nameOfFile,
+                        $"{symbol}USDT",
+                        progress: progress
+                    );
+                    File.Delete(nameOfFile);
+                }
             }
         }
     }
