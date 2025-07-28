@@ -20,26 +20,15 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 
-//await binanceTop.GetTop100ByVolumeAsync();
-//var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-//var symbolsTop100 = BinanceSymbolTop.GetListSymbols();
-
-//var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));//last
-//var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 1), new DateTime(2025, 6, 30));
-//var binanceDownload = new BinanceDownload();
-//await binanceDownload.DownloadMany(symbolsTop100, dates);
-
-//Log.Information(BinanceCsvToBase.ExtractFile("BTC",new DateInfo{Day = "27", Month = "07", Year = "2025"}));
-//BinanceCsvToBase.ExtractMany(symbolsTop100, dates);
-
-//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-06\\");
-
-//Завантаження в базу даних
-//var symbolsTop100 = BinanceSymbolTop.GetListSymbols();
-//var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 25), new DateTime(2025, 6, 25));
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 1), DateTime.Today.AddDays(-1));//last
-await BinanceCsvReader.ExtractMany(symbolsTop100, dates);
+var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 28), new DateTime(2025, 7, 28));//last
+
+var binanceDownload = new BinanceDownload();
+await binanceDownload.DownloadMany(symbolsTop100, dates);
+
+//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-07\\");
+
+//await BinanceCsvReader.ExtractMany(symbolsTop100, dates);
 
 
-//pg_dump -U postgres -Fc binance -f binance_2025_06_01_2025_07_27_1s.dump
+//pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump

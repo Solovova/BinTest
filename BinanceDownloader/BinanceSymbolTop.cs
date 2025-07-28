@@ -50,7 +50,7 @@ public class BinanceSymbolTop{
                 .Take(100);
 
             Log.Information("Топ 100 криптовалют за об'ємом торгів (USDT):");
-            int rank = 1;
+            //int rank = 1;
             foreach (var ticker in top100){
                 var symbol = ticker.Symbol.Replace("USDT", "");
                 // var volume = decimal.Parse(ticker.QuoteVolume, CultureInfo.InvariantCulture);
