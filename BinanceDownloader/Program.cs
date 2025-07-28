@@ -32,3 +32,7 @@ await binanceDownload.DownloadMany(symbolsTop100, dates);
 
 
 //pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump
+//ToDo дозавантаження по дню
+//ToDo зробити автоагрегацію 1м, 5м, 15м, 1г, 4г, 1д
+//ToDo малювання графігу
+//ToDo навігація по графіку масштаб, стартове положення, період ,кінцеве положення, переміщення вікна період
