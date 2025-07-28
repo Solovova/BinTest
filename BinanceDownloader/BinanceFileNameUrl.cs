@@ -11,6 +11,6 @@ public class BinanceFileNameUrl{
     }
 
     public static string GetDownloadPath(DateInfo dateInfo, string symbol){
-        return Path.Combine($"D:\\Downloads\\{symbol}USDT", $"{GetNameOfFile(dateInfo, symbol)}.zip");
+        return Path.Combine($"D:\\Downloads\\{dateInfo.Year}-{dateInfo.Month}\\{symbol}USDT", $"{GetNameOfFile(dateInfo, symbol)}.zip");
     }
 }

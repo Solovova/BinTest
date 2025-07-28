@@ -20,11 +20,12 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 
-
-
 //await binanceTop.GetTop100ByVolumeAsync();
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
 var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));
 
 var binanceDownload = new BinanceDownload();
 await binanceDownload.DownloadMany(symbolsTop100, dates);
+
+//Log.Information(BinanceCsvToBase.ExtractFile("BTC",new DateInfo{Day = "27", Month = "07", Year = "2025"}));
+//BinanceCsvToBase.ExtractMany(symbolsTop100, dates);
