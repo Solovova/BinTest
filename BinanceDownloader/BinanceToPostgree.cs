@@ -2,10 +2,10 @@
 
 namespace BinanceDownloader;
 
-public class BananceCVVToPostgreeAggregate{
+public class BinanceToPostgree{
     private readonly string _connectionString;
 
-    public BananceCVVToPostgreeAggregate(string connectionString){
+    public BinanceToPostgree(string connectionString){
         _connectionString = connectionString;
     }
 

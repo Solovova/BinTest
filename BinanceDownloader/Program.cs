@@ -38,10 +38,8 @@ Log.Logger = new LoggerConfiguration()
 //var symbolsTop100 = BinanceSymbolTop.GetListSymbols();
 //var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 25), new DateTime(2025, 6, 25));
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));//last
-await BinanceCsvToBase.ExtractMany(symbolsTop100, dates);
+var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 1), DateTime.Today.AddDays(-1));//last
+await BinanceCsvReader.ExtractMany(symbolsTop100, dates);
 
 
-// Console.WriteLine( DateTimeOffset.FromUnixTimeMilliseconds(
-//     1750809602419863/1000).DateTime);
-//     //253402300799999
+//pg_dump -U postgres -Fc binance -f binance_2025_06_01_2025_07_27_1s.dump
