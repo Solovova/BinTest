@@ -43,10 +43,11 @@ public class BinanceCsvToBase{
     }
 
     public static async Task ExtractMany(List<string> symbolsTop100, List<DateInfo> dates){
-        var progress = new Progress<double>(percent =>
-            Console.WriteLine($"Прогрес: {percent:F2}%"));
-        var connectionString = "Host=localhost;Database=binance;Username=user;Password=password";
-        var loader = new BananceCVVToPostgree(connectionString, Log.Logger);
+        var progress = new Progress<double>(percent => { });
+        //Console.WriteLine($"Прогрес: {percent:F2}%"));
+        var connectionString = "Host=localhost;Database=binance;Username=postgres;Password=vbwqu1pa";
+        //var loader = new BananceCVVToPostgree(connectionString, Log.Logger);
+        var loader = new BinanceCsvReader();
 
         foreach (var symbol in symbolsTop100){
             foreach (var dateInfo in dates){
@@ -57,9 +58,14 @@ public class BinanceCsvToBase{
 
                     await loader.LoadCsvFile(
                         nameOfFile,
-                        $"{symbol}USDT",
-                        progress: progress
+                        $"{symbol}USDT"
                     );
+                    
+                    // await loader.LoadCsvFile(
+                    //     nameOfFile,
+                    //     $"{symbol}USDT",
+                    //     progress: progress
+                    // );
                     File.Delete(nameOfFile);
                 }
             }

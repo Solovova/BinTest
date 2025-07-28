@@ -10,10 +10,13 @@ namespace BinanceDownloader;
 public class BinanceTradeData
 {
     public long Id { get; set; }
+    
+    
     public decimal Price { get; set; }
     public decimal Quantity { get; set; }
     public decimal QuoteQuantity { get; set; }
     public DateTime Time { get; set; }
+    public long TradeMils { get; set; }
     public bool IsBuyerMaker { get; set; }
     public bool IsBestMatch { get; set; }
 }
@@ -37,19 +40,25 @@ public class BananceCVVToPostgree
         string tableName = GetTableName(symbol);
         string sql = @$"
             CREATE TABLE IF NOT EXISTS {tableName} (
+                
                 trade_id BIGINT PRIMARY KEY,
                 price DECIMAL(20, 8) NOT NULL,
                 quantity DECIMAL(20, 8) NOT NULL,
                 quote_quantity DECIMAL(20, 8) NOT NULL,
                 trade_time TIMESTAMP NOT NULL,
+                trade_mils BIGINT NOT NULL,
                 is_buyer_maker BOOLEAN NOT NULL,
                 is_best_match BOOLEAN NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
             
-            CREATE INDEX IF NOT EXISTS idx_{tableName}_trade_time 
-            ON {tableName}(trade_time);";
-
+            
+";
+        
+        //CREATE INDEX IF NOT EXISTS idx_{{tableName}}_trade_id 
+        //ON {{tableName}}(trade_id);
+        
+// PRIMARY KEY
         await using var command = new NpgsqlCommand(sql, connection);
         await command.ExecuteNonQueryAsync();
     }
@@ -60,7 +69,6 @@ public class BananceCVVToPostgree
         _logger.Information("Початок завантаження файлу: {FilePath}", filePath);
         
         await CreateTableIfNotExists(symbol);
-        
         using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
         
@@ -68,7 +76,7 @@ public class BananceCVVToPostgree
         
         // Підготовка для масового вставлення
         using var writer = connection.BeginBinaryImport(
-            $"COPY {tableName} (trade_id, price, quantity, quote_quantity, trade_time, is_buyer_maker, is_best_match) " +
+            $"COPY {tableName} (trade_id, price, quantity, quote_quantity, trade_time, trade_mils, is_buyer_maker, is_best_match) " +
             "FROM STDIN (FORMAT BINARY)");
 
         using var reader = new StreamReader(filePath);
@@ -86,6 +94,19 @@ public class BananceCVVToPostgree
         
         while (csv.Read())
         {
+            //Console.WriteLine(csv.GetField<long>(4));
+            List<long> ids = new List<long>();
+            //Log.Information();
+            
+            long id = csv.GetField<long>(4)/10000000;
+            
+            
+             if (ids.Contains(id)){
+                 Log.Error($"Dublicate id: {id}");
+             }
+             ids.Add(id);
+            
+             
             var trade = new BinanceTradeData
             {
                 Id = csv.GetField<long>(0),
@@ -93,10 +114,13 @@ public class BananceCVVToPostgree
                 Quantity = csv.GetField<decimal>(2),
                 QuoteQuantity = csv.GetField<decimal>(3),
                 Time = DateTimeOffset.FromUnixTimeMilliseconds(
-                    csv.GetField<long>(4)).DateTime,
+                    csv.GetField<long>(4)/1000).DateTime,
+                TradeMils = csv.GetField<long>(4),
                 IsBuyerMaker = csv.GetField<bool>(5),
                 IsBestMatch = csv.GetField<bool>(6)
             };
+            
+            //Console.WriteLine(trade.Id);
             
             // Записуємо дані у бінарному форматі
             writer.StartRow();
@@ -105,16 +129,19 @@ public class BananceCVVToPostgree
             writer.Write(trade.Quantity);
             writer.Write(trade.QuoteQuantity);
             writer.Write(trade.Time);
+            writer.Write(trade.TradeMils);
             writer.Write(trade.IsBuyerMaker);
             writer.Write(trade.IsBestMatch);
+            
+            
             
             processedRows++;
             
             if (processedRows % 1000 == 0)
             {
                 progress?.Report((double)processedRows / totalRows * 100);
-                _logger.Information("Оброблено {Rows} рядків з {Total}", 
-                    processedRows, totalRows);
+                //_logger.Information("Оброблено {Rows} рядків з {Total}", 
+                //    processedRows, totalRows);
             }
         }
 
@@ -130,18 +157,19 @@ public class BananceCVVToPostgree
 
     private async Task CreateIndices(NpgsqlConnection connection, string tableName)
     {
-        var indices = new[]
-        {
-            $"CREATE INDEX IF NOT EXISTS idx_{tableName}_price ON {tableName}(price)",
-            $"CREATE INDEX IF NOT EXISTS idx_{tableName}_quantity ON {tableName}(quantity)",
-            $"CREATE INDEX IF NOT EXISTS idx_{tableName}_quote_quantity ON {tableName}(quote_quantity)"
-        };
-
-        foreach (string sql in indices)
-        {
-            await using var command = new NpgsqlCommand(sql, connection);
-            await command.ExecuteNonQueryAsync();
-        }
+        // var indices = new[]
+        // {
+        //     $"CREATE INDEX IF NOT EXISTS idx_{tableName}_trade_time ON {tableName}(trade_time)"
+        //     //$"CREATE INDEX IF NOT EXISTS idx_{tableName}_price ON {tableName}(price)",
+        //     //$"CREATE INDEX IF NOT EXISTS idx_{tableName}_quantity ON {tableName}(quantity)",
+        //     //$"CREATE INDEX IF NOT EXISTS idx_{tableName}_quote_quantity ON {tableName}(quote_quantity)"
+        // };
+        //
+        // foreach (string sql in indices)
+        // {
+        //     await using var command = new NpgsqlCommand(sql, connection);
+        //     await command.ExecuteNonQueryAsync();
+        // }
     }
 
     private static string GetTableName(string symbol)
@@ -244,3 +272,16 @@ public class TradeStats
 //     Загальний об'єм: {stats.TotalQuantity}
 //     Загальний об'єм в quote: {stats.TotalQuoteQuantity}
 //     """);
+
+// # Основна директорія даних
+// data_directory = 'D:\PostgresData'
+//
+// # Додатково можна налаштувати інші директорії
+// # Директорія для WAL (Write-Ahead Logging)
+// wal_directory = 'D:\PostgresWAL'
+//
+// # Тимчасові файли
+// temp_tablespaces = 'D:\PostgresTemp'
+
+//1. - `:\Program Files\PostgreSQL\[version]\data`
+//1. `postgresql.conf`
