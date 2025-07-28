@@ -22,10 +22,14 @@ Log.Logger = new LoggerConfiguration()
 
 //await binanceTop.GetTop100ByVolumeAsync();
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));
+//var symbolsTop100 = BinanceSymbolTop.GetListSymbols();
 
+//var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 1), DateTime.Today.AddDays(-1));//last
+var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 6, 1), new DateTime(2025, 6, 30));
 var binanceDownload = new BinanceDownload();
 await binanceDownload.DownloadMany(symbolsTop100, dates);
 
 //Log.Information(BinanceCsvToBase.ExtractFile("BTC",new DateInfo{Day = "27", Month = "07", Year = "2025"}));
 //BinanceCsvToBase.ExtractMany(symbolsTop100, dates);
+
+//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-07\\");

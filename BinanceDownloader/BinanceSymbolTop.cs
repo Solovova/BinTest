@@ -83,7 +83,7 @@ public class BinanceSymbolTop{
             "SOL",
             "XRP",
             "BNB",
-            "ERA",
+            //"ERA",
             "SUI",
             "FDUSD",
             "DOGE",
@@ -140,7 +140,7 @@ public class BinanceSymbolTop{
             "HAEDAL",
             "RAY",
             "CETUS",
-            "C",
+            //"C",
             "S",
             "SHIB",
             "TON",
@@ -176,6 +176,14 @@ public class BinanceSymbolTop{
             "POL",
             "BAR",
             "RENDER"
+        };
+        
+
+    }
+
+    public static List<string> GetListSymbols(){
+        return new List<string>{
+            "ALGO"
         };
     }
 }
