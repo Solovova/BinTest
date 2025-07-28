@@ -27,3 +27,21 @@ public class ApiServices{
     
 
 }
+
+//Binance+
+//Okx
+//https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT
+
+//Huobi
+//https://api.huobi.pro/market/detail/merged?symbol=btcusdt
+//https://huobiapi.github.io/docs/spot/v1/en/#get-chains-information
+//https://api.huobi.pro/v2/reference/currencies?currency=ltc
+//https://api.huobi.pro/v1/common/symbols
+
+
+
+//Gopax
+//BitHumb
+//https://www.bithumb.com/react/
+//UPBit
+//https://sg.upbit.com/

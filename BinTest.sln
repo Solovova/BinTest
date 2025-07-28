@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoloTrader", "SoloTrader\So
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiService", "ApiService\ApiService.csproj", "{153826C6-11A9-4B2E-ACD1-349ECB06E6A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceDownloader", "BinanceDownloader\BinanceDownloader.csproj", "{731B1D77-6789-47FE-98BD-01B5047D352E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{153826C6-11A9-4B2E-ACD1-349ECB06E6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{153826C6-11A9-4B2E-ACD1-349ECB06E6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{153826C6-11A9-4B2E-ACD1-349ECB06E6A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{731B1D77-6789-47FE-98BD-01B5047D352E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{731B1D77-6789-47FE-98BD-01B5047D352E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{731B1D77-6789-47FE-98BD-01B5047D352E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{731B1D77-6789-47FE-98BD-01B5047D352E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

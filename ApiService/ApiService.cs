@@ -38,7 +38,7 @@ public class ApiService{
         _apiSecret = apiSecret;
 
         var handler = new SocketsHttpHandler{
-            MaxConnectionsPerServer = 20, // Встановлюємо максимальну кількість з'єднань
+            MaxConnectionsPerServer = 5, // Встановлюємо максимальну кількість з'єднань
             PooledConnectionLifetime = TimeSpan.FromMinutes(2), // Опціонально: час життя з'єднання в пулі
             PooledConnectionIdleTimeout = TimeSpan.FromMinutes(1) // Опціонально: час простою з'єднання
         };
