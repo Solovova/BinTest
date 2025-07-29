@@ -178,12 +178,14 @@ public class BinanceSymbolTop{
             "RENDER"
         };
         
+        
+        
 
     }
 
     public static List<string> GetListSymbols(){
         return new List<string>{
-            "ALGO"
+            "PEPE"
         };
     }
 }

@@ -145,8 +145,8 @@ public class BinanceDbConvertToPeriod{
                  close_price DECIMAL(18,8) NOT NULL,
                  high_price DECIMAL(18,8) NOT NULL,
                  low_price DECIMAL(18,8) NOT NULL,
-                 buy DECIMAL(20, 8) NOT NULL,
-                 sell DECIMAL(20, 8) NOT NULL,
+                 buy DECIMAL(24, 8) NOT NULL,
+                 sell DECIMAL(24, 8) NOT NULL,
                  trades_count_buy INT NOT NULL,
                  trades_count_sell INT NOT NULL
              );
