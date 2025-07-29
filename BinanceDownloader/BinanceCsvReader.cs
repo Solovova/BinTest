@@ -15,7 +15,8 @@ public class BinanceCsvReader{
                     Quantity = g.Sum(t => t.Quantity),
                     TimeTrade = g.Min(t => t.TimeTrade),
                     Buy = g.Where(t => !t.IsBuyerMaker).Sum(t => t.Quantity),
-                    Sell = g.Where(t => t.IsBuyerMaker).Sum(t => t.Quantity)
+                    Sell = g.Where(t => t.IsBuyerMaker).Sum(t => t.Quantity),
+                    TradesCount = g.Count()
                 });
     }
 

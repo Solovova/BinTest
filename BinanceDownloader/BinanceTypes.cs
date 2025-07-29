@@ -18,6 +18,8 @@ public class TradeAggregation : IEnumerable{
     public long TimeTrade { get; set; }
     public decimal Buy { get; set; }
     public decimal Sell { get; set; }
+    public int TradesCount { get; set; }
+    
     public IEnumerator GetEnumerator(){
         throw new NotImplementedException();
     }

@@ -21,7 +21,8 @@ public class BinanceToPostgree{
                 quantity DECIMAL(20, 8) NOT NULL,
                 trade_time BIGINT NOT NULL PRIMARY KEY,
                 buy DECIMAL(20, 8) NOT NULL,
-                sell DECIMAL(20, 8) NOT NULL
+                sell DECIMAL(20, 8) NOT NULL,
+                trades_count INT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS idx_{tableName}_trade_time 
             ON {tableName}(trade_time);
@@ -41,7 +42,7 @@ public class BinanceToPostgree{
 
         // Підготовка для масового вставлення
         using var writer = connection.BeginBinaryImport(
-            $"COPY {tableName} (price, quantity, trade_time, buy, sell) " +
+            $"COPY {tableName} (price, quantity, trade_time, buy, sell, trades_count) " +
             "FROM STDIN (FORMAT BINARY)");
 
         foreach (var trade in tradesAggregation){
@@ -51,6 +52,7 @@ public class BinanceToPostgree{
             writer.Write(trade.Value.TimeTrade);
             writer.Write(trade.Value.Buy);
             writer.Write(trade.Value.Sell);
+            writer.Write(trade.Value.TradesCount);
         }
         await writer.CompleteAsync();
     }

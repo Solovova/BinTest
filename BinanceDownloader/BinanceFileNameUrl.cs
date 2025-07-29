@@ -22,7 +22,7 @@ public class BinanceFileNameUrl{
         {"d", 86400}
     };
     
-    public static Dictionary<string, long> GraphPeriodDb = new Dictionary<string, long>(){
+    public static readonly Dictionary<string, long> GraphPeriodDb = new Dictionary<string, long>(){
         {"1m", 60},
         {"5m", 300},
         {"15m", 900},

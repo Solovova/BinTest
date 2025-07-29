@@ -4,9 +4,9 @@ using Serilog;
 namespace BinanceDownloader;
 
 public class BinanceDbConvertToPeriod{
-    public class TableMinMax{
-        public long MinDate{ get; set; }
-        public long MaxDate{ get; set; }
+    public class TimePeriod{
+        public long TimeMin{ get; set; }
+        public long TimeMax{ get; set; }
     }
 
     public static void DropAllPeriodTables(){
@@ -31,7 +31,7 @@ public class BinanceDbConvertToPeriod{
         }
     }
 
-    public static TableMinMax GetTableMinMaxDates(string symbol, string period = ""){
+    public static TimePeriod GetTableMinMaxDates(string symbol, string period = ""){
         var tableName = BinanceFileNameUrl.GetDbTableName(symbol, period);
         using (var connection = new NpgsqlConnection(BinanceFileNameUrl.GetDbConnectingString())){
             connection.Open();
@@ -45,9 +45,9 @@ public class BinanceDbConvertToPeriod{
             using (var command = new NpgsqlCommand(query, connection)){
                 using (var reader = command.ExecuteReader()){
                     if (reader.Read()){
-                        return new TableMinMax{
-                            MinDate = reader.GetInt64(0),
-                            MaxDate = reader.GetInt64(1)
+                        return new TimePeriod{
+                            TimeMin = reader.GetInt64(0),
+                            TimeMax = reader.GetInt64(1)
                         };
                     }
                 }
@@ -55,5 +55,22 @@ public class BinanceDbConvertToPeriod{
         }
 
         throw new Exception($"Не вдалося отримати дані з таблиці {tableName}");
+    }
+
+
+    public static List<TimePeriod> GetTimePeriods(TimePeriod timePeriod, string period){
+        var periods = new List<TimePeriod>();
+        long periodLength = BinanceFileNameUrl.GraphPeriodDb[period];
+        var start = timePeriod.TimeMin/1000000/periodLength;
+        start = start * periodLength * 1000000;
+        var end = timePeriod.TimeMax/1000000/periodLength;
+        end = end * periodLength * 1000000;
+        for (var i = start; i <= end; i += periodLength * 1000000){
+            periods.Add(new TimePeriod{
+                TimeMin = i,
+                TimeMax = i + periodLength * 1000000 - 1
+            });
+        }
+        return periods;
     }
 }

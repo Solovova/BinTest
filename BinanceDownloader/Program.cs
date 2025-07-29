@@ -21,14 +21,16 @@ Log.Logger = new LoggerConfiguration()
 
 
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));//last
-
+var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 4, 1), new DateTime(2025, 4, 30));//last
+//3 31
+//2 28
+//1 31
 var binanceDownload = new BinanceDownload();
 await binanceDownload.DownloadMany(symbolsTop100, dates);
 
 //await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-05\\");
 
-//await BinanceCsvReader.ExtractMany(symbolsTop100, dates);
+//await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
 
 //pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump
@@ -36,3 +38,7 @@ await binanceDownload.DownloadMany(symbolsTop100, dates);
 //ToDo зробити автоагрегацію 1м, 5м, 15м, 1г, 4г, 1д
 //ToDo малювання графігу
 //ToDo навігація по графіку масштаб, стартове положення, період ,кінцеве положення, переміщення вікна період
+
+BinanceDbConvertToPeriod.TimePeriod timePeriod = BinanceDbConvertToPeriod.GetTableMinMaxDates("BTCUSDT");
+var periods = BinanceDbConvertToPeriod.GetTimePeriods(timePeriod, "1d");
+Console.WriteLine(periods.Count); //28 30 31 = 89
