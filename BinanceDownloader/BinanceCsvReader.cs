@@ -6,13 +6,12 @@ using Serilog;
 namespace BinanceDownloader;
 
 public class BinanceCsvReader{
-    static Dictionary<long, TradeAggregation> AggregateTradesPerSecond(List<BinanceTradeDataRaw> trades){
+    static Dictionary<long, TradeAggregationCsv> AggregateTradesPerSecond(List<BinanceTradeDataRaw> trades){
         return trades.GroupBy(t => t.TimeTrade / 1000 / 1000) // Конвертуємо мілісекунди в секунди
             .ToDictionary(
                 g => g.Key,
-                g => new TradeAggregation{
+                g => new TradeAggregationCsv{
                     Price = g.Average(t => t.Price),
-                    Quantity = g.Sum(t => t.Quantity),
                     TimeTrade = g.Min(t => t.TimeTrade),
                     Buy = g.Where(t => !t.IsBuyerMaker).Sum(t => t.Quantity),
                     Sell = g.Where(t => t.IsBuyerMaker).Sum(t => t.Quantity),
@@ -34,13 +33,10 @@ public class BinanceCsvReader{
 
         while (csv.Read()){
             var trade = new BinanceTradeDataRaw{
-                Id = csv.GetField<long>(0),
                 Price = csv.GetField<decimal>(1),
                 Quantity = csv.GetField<decimal>(2),
-                QuoteQuantity = csv.GetField<decimal>(3),
                 TimeTrade = csv.GetField<long>(4),
                 IsBuyerMaker = csv.GetField<bool>(5),
-                IsBestMatch = csv.GetField<bool>(6)
             };
             trades.Add(trade);
         }

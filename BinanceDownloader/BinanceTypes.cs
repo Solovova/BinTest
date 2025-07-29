@@ -12,9 +12,8 @@ public class BinanceTradeDataRaw{
     public bool IsBestMatch{ get; set; }
 }
     
-public class TradeAggregation : IEnumerable{
+public class TradeAggregationCsv : IEnumerable{
     public decimal Price { get; set; }
-    public decimal Quantity { get; set; }
     public long TimeTrade { get; set; }
     public decimal Buy { get; set; }
     public decimal Sell { get; set; }
@@ -24,5 +23,17 @@ public class TradeAggregation : IEnumerable{
     public IEnumerator GetEnumerator(){
         throw new NotImplementedException();
     }
+}
+
+public class TradeAggregationKline{
+    public long TimeTrade{ get; set; }
+    public decimal OpenPrice{ get; set; }
+    public decimal ClosePrice{ get; set; }
+    public decimal HighPrice{ get; set; }
+    public decimal LowPrice{ get; set; }
+    public decimal Buy{ get; set; }
+    public decimal Sell{ get; set; }
+    public int TradesCountBuy { get; set; }
+    public int TradesCountSell { get; set; }
 }
 
