@@ -46,8 +46,8 @@ public class BinanceCsvReader{
         var results = AggregateTradesPerSecond(trades);
 
         Log.Information("Конвертування завершено. Всього конвертовано {Rows} рядків", results.Count);
-        var connectionString = BinanceFileNameUrl.GetDbConnectingString();
-        var binanceToPostgre = new BinanceToPostgree(connectionString);
+        var connectionString = BinanceContext.GetDbConnectingString();
+        var binanceToPostgre = new BinanceDbAggTrade(connectionString);
         await binanceToPostgre.LoadCsvFile(symbol, results);
     }
 
@@ -89,7 +89,7 @@ public class BinanceCsvReader{
         foreach (var symbol in symbolsTop100){
             foreach (var dateInfo in dates){
                 string toDir = "D:\\Downloads\\CSV\\";
-                string nameOfArchive = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
+                string nameOfArchive = BinanceContext.GetDownloadPath(dateInfo, symbol);
                 if (File.Exists(nameOfArchive)){
                     string nameOfFile = ExtractFile(toDir, nameOfArchive);
                     await LoadCsvFile(nameOfFile, $"{symbol}USDT");

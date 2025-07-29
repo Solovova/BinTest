@@ -2,7 +2,7 @@
 
 namespace BinanceDownloader;
 
-public class BinanceDownload{
+public class BinanceZipDownload{
     async Task DownloadFileAsync(string url, string filePath, HttpClient httpClient){
         //using var httpClient = new HttpClient();
         try{
@@ -39,8 +39,8 @@ public class BinanceDownload{
 
         foreach (var symbol in symbolsTop100){
             foreach (var dateInfo in dates){
-                string url = BinanceFileNameUrl.GetUrl(dateInfo, symbol);
-                string downloadPath = BinanceFileNameUrl.GetDownloadPath(dateInfo, symbol);
+                string url = BinanceContext.GetUrl(dateInfo, symbol);
+                string downloadPath = BinanceContext.GetDownloadPath(dateInfo, symbol);
 
                 tasks.Add(Download(url, downloadPath, httpClient));
                 tasks.Add(Download($"{url}.CHECKSUM", $"{downloadPath}.CHECKSUM", httpClient));

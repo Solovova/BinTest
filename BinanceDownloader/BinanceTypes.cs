@@ -37,3 +37,9 @@ public class TradeAggregationKline{
     public int TradesCountSell { get; set; }
 }
 
+public class DateInfo{
+    public string Day{ get; init; } = string.Empty;
+    public string Month{ get; init; } = string.Empty;
+    public string Year{ get; init; } = string.Empty;
+}
+

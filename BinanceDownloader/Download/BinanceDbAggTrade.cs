@@ -2,10 +2,10 @@
 
 namespace BinanceDownloader;
 
-public class BinanceToPostgree{
+public class BinanceDbAggTrade{
     private readonly string _connectionString;
 
-    public BinanceToPostgree(string connectionString){
+    public BinanceDbAggTrade(string connectionString){
         _connectionString = connectionString;
     }
 
@@ -13,7 +13,7 @@ public class BinanceToPostgree{
         using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
 
-        string tableName = BinanceFileNameUrl.GetDbTableName(symbol);
+        string tableName = BinanceContext.GetDbTableName(symbol);
         string sql = @$"
             CREATE TABLE IF NOT EXISTS {tableName} (
                 trade_time BIGINT NOT NULL PRIMARY KEY,
@@ -35,7 +35,7 @@ public class BinanceToPostgree{
         using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
 
-        string tableName = BinanceFileNameUrl.GetDbTableName(symbol);
+        string tableName = BinanceContext.GetDbTableName(symbol);
 
         // Підготовка для масового вставлення
         using var writer = connection.BeginBinaryImport(

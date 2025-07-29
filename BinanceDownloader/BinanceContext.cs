@@ -1,6 +1,6 @@
 ﻿namespace BinanceDownloader;
 
-public class BinanceFileNameUrl{
+public static class BinanceContext{
     private static string GetNameOfFile(DateInfo dateInfo, string symbol){
         return $"{symbol}{"USDT"}-trades-{dateInfo.Year}-{dateInfo.Month}-{dateInfo.Day}";
     }
@@ -39,5 +39,14 @@ public class BinanceFileNameUrl{
     
     public static string GetDbConnectingString(){
         return "Host=localhost;Database=binance;Username=postgres;Password=vbwqu1pa";
+    }
+    
+    public static List<DateInfo> GetDateFromRange(DateTime startDate, DateTime endDate){
+        var dates = new List<DateInfo>();
+        for (var date = startDate; date <= endDate; date = date.AddDays(1)){
+            dates.Add(new DateInfo{Day = $"{date.Day:D2}", Month = $"{date.Month:D2}", Year = $"{date.Year:D4}"});
+        }
+
+        return dates;
     }
 }

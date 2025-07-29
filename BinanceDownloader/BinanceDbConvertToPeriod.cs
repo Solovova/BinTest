@@ -11,11 +11,11 @@ public class BinanceDbConvertToPeriod{
 
     public static void DropAllPeriodTables(){
         var symbols = BinanceSymbolTop.GetTop100ByVolumeList();
-        using (var connection = new NpgsqlConnection(BinanceFileNameUrl.GetDbConnectingString())){
+        using (var connection = new NpgsqlConnection(BinanceContext.GetDbConnectingString())){
             connection.Open();
             foreach (var symbol in symbols){
-                foreach (var period in BinanceFileNameUrl.GraphPeriodDb.Keys){
-                    string tableName = BinanceFileNameUrl.GetDbTableName(symbol, period);
+                foreach (var period in BinanceContext.GraphPeriodDb.Keys){
+                    string tableName = BinanceContext.GetDbTableName(symbol, period);
                     string dropQuery = $"DROP TABLE IF EXISTS {tableName}";
                     using (var command = new NpgsqlCommand(dropQuery, connection)){
                         try{
@@ -32,8 +32,8 @@ public class BinanceDbConvertToPeriod{
     }
 
     public static TimePeriod GetTableMinMaxDates(string symbol, string period = ""){
-        var tableName = BinanceFileNameUrl.GetDbTableName(symbol, period);
-        using (var connection = new NpgsqlConnection(BinanceFileNameUrl.GetDbConnectingString())){
+        var tableName = BinanceContext.GetDbTableName(symbol, period);
+        using (var connection = new NpgsqlConnection(BinanceContext.GetDbConnectingString())){
             connection.Open();
 
             string query = @"
@@ -60,7 +60,7 @@ public class BinanceDbConvertToPeriod{
 
     public static List<TimePeriod> GetTimePeriods(TimePeriod timePeriod, string period){
         var periods = new List<TimePeriod>();
-        long periodLength = BinanceFileNameUrl.GraphPeriodDb[period];
+        long periodLength = BinanceContext.GraphPeriodDb[period];
         var start = timePeriod.TimeMin/1000000/periodLength;
         start = start * periodLength * 1000000;
         var end = timePeriod.TimeMax/1000000/periodLength;

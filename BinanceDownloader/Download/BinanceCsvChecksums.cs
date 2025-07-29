@@ -6,7 +6,7 @@ namespace BinanceDownloader;
 
 
 
-public class BinanceChecksums
+public class BinanceCsvChecksums
 {
     public static async Task VerifyAllChecksums(string rootFolder)
     {
