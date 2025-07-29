@@ -22,23 +22,23 @@ Log.Logger = new LoggerConfiguration()
 
 
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));//last
+//var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 1, 1), new DateTime(2025, 3, 31));//last
 //7 28 x x
 //6 30 x x
 //5 31 x x
 //4 30 x
-//3 31
-//2 28
-//1 31
-//var binanceDownload = new BinanceDownload();
+//3 31 x
+//2 28 x
+//1 31 x
+//var binanceDownload = new BinanceZipDownload();
 //await binanceDownload.DownloadMany(symbolsTop100, dates);
 
-//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-04\\");
+//await BinanceCsvChecksums.VerifyAllChecksums("D:\\Downloads\\2025-03\\");
 
 //await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
 
-await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);
+//await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);
 
 //pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump
 

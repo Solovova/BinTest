@@ -29,7 +29,7 @@ public class BinanceZipDownload{
     public async Task DownloadMany(List<string> symbolsTop100, List<DateInfo> dates){
         var tasks = new List<Task>();
         var handler = new SocketsHttpHandler{
-            MaxConnectionsPerServer = 5, // Встановлюємо максимальну кількість з'єднань
+            MaxConnectionsPerServer = 4, // Встановлюємо максимальну кількість з'єднань
             PooledConnectionLifetime = TimeSpan.FromMinutes(2), // Опціонально: час життя з'єднання в пулі
             PooledConnectionIdleTimeout = TimeSpan.FromMinutes(1) // Опціонально: час простою з'єднання
         };
