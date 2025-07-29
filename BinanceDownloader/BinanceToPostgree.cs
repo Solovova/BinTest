@@ -13,7 +13,7 @@ public class BinanceToPostgree{
         using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
 
-        string tableName = GetTableName(symbol);
+        string tableName = BinanceFileNameUrl.GetDbTableName(symbol);
         string sql = @$"
             CREATE TABLE IF NOT EXISTS {tableName} (
                 
@@ -30,16 +30,14 @@ public class BinanceToPostgree{
         await command.ExecuteNonQueryAsync();
     }
 
-    private static string GetTableName(string symbol){
-        return $"trades_{symbol.ToLower()}";
-    }
+
 
     public async Task LoadCsvFile(string symbol, Dictionary<long, TradeAggregation> tradesAggregation){
         await CreateTableIfNotExists(symbol);
         using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
 
-        string tableName = GetTableName(symbol);
+        string tableName = BinanceFileNameUrl.GetDbTableName(symbol);
 
         // Підготовка для масового вставлення
         using var writer = connection.BeginBinaryImport(

@@ -48,7 +48,7 @@ public class BinanceCsvReader{
         var results = AggregateTradesPerSecond(trades);
 
         Log.Information("Конвертування завершено. Всього конвертовано {Rows} рядків", results.Count);
-        var connectionString = "Host=localhost;Database=binance;Username=postgres;Password=vbwqu1pa";
+        var connectionString = BinanceFileNameUrl.GetDbConnectingString();
         var binanceToPostgre = new BinanceToPostgree(connectionString);
         await binanceToPostgre.LoadCsvFile(symbol, results);
     }

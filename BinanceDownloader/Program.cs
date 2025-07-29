@@ -21,7 +21,7 @@ Log.Logger = new LoggerConfiguration()
 
 
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 7, 28), new DateTime(2025, 7, 28));//last
+var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));//last
 
 var binanceDownload = new BinanceDownload();
 await binanceDownload.DownloadMany(symbolsTop100, dates);

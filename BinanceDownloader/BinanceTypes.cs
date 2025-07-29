@@ -22,3 +22,4 @@ public class TradeAggregation : IEnumerable{
         throw new NotImplementedException();
     }
 }
+
