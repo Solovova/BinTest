@@ -34,7 +34,7 @@ public static class BinanceContext{
     public static string GetDbTableName(string symbol, string period=""){
         return string.IsNullOrEmpty(period) 
             ? $"trades_{symbol.ToLower()}" 
-            : $"trades_{symbol.ToLower()}_{symbol.ToLower()}";
+            : $"trades_{symbol.ToLower()}_{period.ToLower()}";
     }
     
     public static string GetDbConnectingString(){

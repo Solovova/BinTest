@@ -34,8 +34,10 @@ var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 7, 1), new DateTi
 
 //await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-04\\");
 
-await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
+//await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
+var symbols = BinanceSymbolTop.GetListSymbols();
+await BinanceDbConvertToPeriod.ConvertAll(symbols);
 
 //pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump
 //ToDo дозавантаження по дню
