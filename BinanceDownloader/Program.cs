@@ -26,7 +26,7 @@ var dates = BinanceDate.GetDateFromRange(new DateTime(2025, 5, 1), new DateTime(
 var binanceDownload = new BinanceDownload();
 await binanceDownload.DownloadMany(symbolsTop100, dates);
 
-//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-07\\");
+//await BinanceChecksums.VerifyAllChecksums("D:\\Downloads\\2025-05\\");
 
 //await BinanceCsvReader.ExtractMany(symbolsTop100, dates);
 
