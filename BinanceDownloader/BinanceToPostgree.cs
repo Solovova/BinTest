@@ -22,7 +22,7 @@ public class BinanceToPostgree{
                 trade_time BIGINT NOT NULL PRIMARY KEY,
                 buy DECIMAL(20, 8) NOT NULL,
                 sell DECIMAL(20, 8) NOT NULL,
-                trades_count_buy INT NOT NULL
+                trades_count_buy INT NOT NULL,
                 trades_count_sell INT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS idx_{tableName}_trade_time 
