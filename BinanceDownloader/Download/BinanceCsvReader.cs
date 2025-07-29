@@ -3,7 +3,7 @@ using System.IO.Compression;
 using CsvHelper;
 using Serilog;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 public class BinanceCsvReader{
     static Dictionary<long, TradeAggregationCsv> AggregateTradesPerSecond(List<BinanceTradeDataRaw> trades){

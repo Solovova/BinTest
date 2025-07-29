@@ -1,7 +1,7 @@
 ﻿using Npgsql;
 using Serilog;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 public class BinanceDbConvertToPeriod{
     public class TimePeriod{
@@ -15,7 +15,8 @@ public class BinanceDbConvertToPeriod{
             connection.Open();
             foreach (var symbol in symbols){
                 foreach (var period in BinanceContext.GraphPeriodDb.Keys){
-                    string tableName = BinanceContext.GetDbTableName(symbol, period);
+                    string tableName = BinanceContext.GetDbTableName($"{symbol}USDT", period);
+                    
                     string dropQuery = $"DROP TABLE IF EXISTS {tableName}";
                     using (var command = new NpgsqlCommand(dropQuery, connection)){
                         try{
@@ -79,7 +80,7 @@ public class BinanceDbConvertToPeriod{
         await connection.OpenAsync();
         await CreateTargetTableIfNotExists(connection, targetTable);
         // Виконуємо агрегацію та зберігаємо дані
-        await using var transaction = await connection.BeginTransactionAsync();
+        //await using var transaction = await connection.BeginTransactionAsync();
         try{
             string aggregationQuery = $@"
             INSERT INTO {targetTable} (
@@ -113,23 +114,24 @@ public class BinanceDbConvertToPeriod{
                         trades_count_buy,
                         trades_count_sell
                     FROM {sourceTable}
-                    WHERE trade_time BETWEEN @start_time AND @end_time
+                    WHERE trade_time >= @start_time AND trade_time <= @end_time
                 ) t
                 GROUP BY group_time
                 ORDER BY group_time;
 ";
 
-            await using var command = new NpgsqlCommand(aggregationQuery, connection, transaction);
+            await using var command = new NpgsqlCommand(aggregationQuery, connection);
+            //await using var command = new NpgsqlCommand(aggregationQuery, connection, transaction);
             
             command.Parameters.AddWithValue("@start_time", period.TimeMin);
             command.Parameters.AddWithValue("@end_time", period.TimeMax);
             command.Parameters.AddWithValue("@period_length", periodLength*1000000);
 
             await command.ExecuteNonQueryAsync();
-            await transaction.CommitAsync();
+            //await transaction.CommitAsync();
         }
         catch (Exception){
-            await transaction.RollbackAsync();
+            //await transaction.RollbackAsync();
             throw;
         }
     }

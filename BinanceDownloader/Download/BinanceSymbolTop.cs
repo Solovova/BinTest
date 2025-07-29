@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Serilog;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 public class TickerInfo{
     [JsonPropertyName("symbol")] public string Symbol{ get; set; } = string.Empty;

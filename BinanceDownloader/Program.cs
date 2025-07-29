@@ -1,4 +1,5 @@
 ﻿using BinanceDownloader;
+using BinanceDownloader.Download;
 using Serilog;
 using Serilog.Events;
 
@@ -21,10 +22,10 @@ Log.Logger = new LoggerConfiguration()
 
 
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
-var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 7, 1), new DateTime(2025, 7, 28));//last
+var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));//last
 //7 28 x x
-//6 30 x
-//5 31 x
+//6 30 x x
+//5 31 x x
 //4 30 x
 //3 31
 //2 28
@@ -36,12 +37,11 @@ var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 7, 1), new DateTi
 
 //await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
-var symbols = BinanceSymbolTop.GetListSymbols();
-await BinanceDbConvertToPeriod.ConvertAll(symbols);
+
+await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);
 
 //pg_dump -U postgres -Fc binance -f d:\binance_2025_06_01_2025_07_27_1s.dump
-//ToDo дозавантаження по дню
-//ToDo зробити автоагрегацію 1м, 5м, 15м, 1г, 4г, 1д
+
 //ToDo малювання графігу
 //ToDo навігація по графіку масштаб, стартове положення, період ,кінцеве положення, переміщення вікна період
 

@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 public class BinanceZipDownload{
     async Task DownloadFileAsync(string url, string filePath, HttpClient httpClient){

@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using Serilog;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 
 

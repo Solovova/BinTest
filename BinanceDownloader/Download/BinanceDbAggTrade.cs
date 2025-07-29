@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace BinanceDownloader;
+namespace BinanceDownloader.Download;
 
 public class BinanceDbAggTrade{
     private readonly string _connectionString;
