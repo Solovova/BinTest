@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiService", "ApiService\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceDownloader", "BinanceDownloader\BinanceDownloader.csproj", "{731B1D77-6789-47FE-98BD-01B5047D352E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinGuiDev", "BinGuiDev\BinGuiDev.csproj", "{C459F426-86BB-4E69-9295-E792DE7E1D25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{731B1D77-6789-47FE-98BD-01B5047D352E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{731B1D77-6789-47FE-98BD-01B5047D352E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{731B1D77-6789-47FE-98BD-01B5047D352E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C459F426-86BB-4E69-9295-E792DE7E1D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C459F426-86BB-4E69-9295-E792DE7E1D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C459F426-86BB-4E69-9295-E792DE7E1D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C459F426-86BB-4E69-9295-E792DE7E1D25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
