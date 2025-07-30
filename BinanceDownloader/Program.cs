@@ -24,7 +24,7 @@ Log.Logger = new LoggerConfiguration()
 var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
 //var symbolsTop100 = BinanceSymbolTop.GetListSymbols();
 
-//var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 1, 1), new DateTime(2025, 3, 31));//last
+var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 7, 28), new DateTime(2025, 7, 28));//last
 //7 28 x x
 //6 30 x x
 //5 31 x x
@@ -37,12 +37,12 @@ var symbolsTop100 = BinanceSymbolTop.GetTop100ByVolumeList();
 
 //await BinanceCsvChecksums.VerifyAllChecksums("D:\\Downloads\\2025-03\\");
 
-//await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
+await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
 
-await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);
+//await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);
 
-//pg_dump -U postgres -Fc binance -f d:\binance_2025_05_01_2025_07_28_full.dump
+
 
 //ToDo малювання графігу
 //ToDo навігація по графіку масштаб, стартове положення, період ,кінцеве положення, переміщення вікна період

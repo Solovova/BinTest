@@ -38,6 +38,7 @@ public static class BinanceContext{
     }
     
     public static string GetDbConnectingString(){
+        //return "Host=localhost:5433;Database=binancets;Username=postgres;Password=vbwqu1pats;CommandTimeout=300;Timeout=300";
         return "Host=localhost;Database=binance;Username=postgres;Password=vbwqu1pa";
     }
     

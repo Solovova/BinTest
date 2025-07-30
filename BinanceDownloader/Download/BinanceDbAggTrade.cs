@@ -25,6 +25,7 @@ public class BinanceDbAggTrade{
             );
             CREATE INDEX IF NOT EXISTS idx_{tableName}_trade_time 
             ON {tableName}(trade_time);
+            
 ";
         await using var command = new NpgsqlCommand(sql, connection);
         await command.ExecuteNonQueryAsync();

@@ -152,6 +152,8 @@ public class BinanceDbConvertToPeriod{
              );
              CREATE INDEX IF NOT EXISTS idx_{targetTable}_trade_time 
                ON {targetTable}(trade_time);
+             
+
 ";
 
         await using var command = new NpgsqlCommand(createTableQuery, connection);
