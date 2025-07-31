@@ -2,9 +2,9 @@
 
 namespace BinGuiDev.Components.Dev;
 
-public partial class BinDateTime : UserControl
+public partial class Dev1 : UserControl
 {
-    public BinDateTime()
+    public Dev1()
     {
         InitializeComponent();
     }

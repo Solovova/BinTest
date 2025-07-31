@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="BinGuiDev.Components.Dev.Dev2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:BinGuiDev.Components.Dev"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+
+
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="800">
+    
+
+    <Grid Height="100" Width="200" Background="#212121">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="01.02.25"  FontSize="16"  Margin="5" 
+                    SelectedDateFormat="Short"
+                    >
+            </DatePicker> 
+        <!-- <TextBlock  Grid.Row="1" Grid.Column="1"   Text="01:30"  FontSize="16"  Margin="10"></TextBlock> -->
+        <!-- <Button Grid.Row="1" Grid.Column="0"></Button> -->
+        <ToggleButton  Grid.Row="1" Grid.Column="0" Margin="5" Width="40" Height="40"/>
+        <!-- <ui:TimePicker Grid.Row="1" Grid.Column="1" ClockIdentifier="Clock24Hour" MinuteIncrement="5" -->
+        <!--                Width="200" -->
+        <!--                SelectedTime="10:30" -->
+        <!-- /> -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Grid.Column="0"  x:Name="HourComboBox" Margin="0,0,0,0" 
+                                      Width="70"
+                                      SelectedIndex="0">
+            
+            </ComboBox>
+            <ComboBox Grid.Column="1"  x:Name="MinComboBox" Margin="0,0,5,0" 
+                      Width="70"
+                      SelectedIndex="0">
+            
+            </ComboBox>
+        </Grid>
+
+
+
+    </Grid>
+</UserControl>
