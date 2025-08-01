@@ -26,8 +26,6 @@
                 Data="M12 17a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2h1zm-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"
                 Fill="Gray"
                 Stretch="Uniform" />
-
-
         </ToggleButton>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -37,12 +35,16 @@
             <ComboBox Grid.Column="0" x:Name="HourComboBox" Margin="0,0,0,0"
                       Width="70"
                       SelectedIndex="0">
+                <ComboBox.Resources>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Width" Value="100" />
+                    </Style>
+                </ComboBox.Resources>
 
             </ComboBox>
             <ComboBox Grid.Column="1" x:Name="MinComboBox" Margin="0,0,5,0"
                       Width="70"
                       SelectedIndex="0">
-
             </ComboBox>
         </Grid>
     </Grid>
