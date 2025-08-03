@@ -13,7 +13,7 @@ public partial class Dev3 : UserControl
         get => _unixTime;
         set
         {
-            if (_unixTime != value)
+            if (_unixTime != value / 1000000)
             {
                 _unixTime = value / 1000000;
                 DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime).UtcDateTime;

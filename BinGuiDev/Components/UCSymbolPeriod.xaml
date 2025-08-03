@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="BinGuiDev.Components.UCSymbolPeriod"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BinGuiDev.Components"
+             mc:Ignorable="d"
+             d:DesignHeight="50" d:DesignWidth="720">
+<Grid Height="50" Width="720" Background="#212121">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+    <ComboBox Grid.Column="0" Margin="5" Width="150" Height="40"
+                  x:FieldModifier="private"
+                  x:Name="Symbol"
+                  SelectedIndex="0">
+        <ComboBoxItem>CHIAUSDT</ComboBoxItem>
+            
+    </ComboBox>
+    <!--     <ToggleButton Grid.Column="1" Margin="5" Width="50" Height="40">1m -->
+    <!--     </ToggleButton> -->
+    <!-- <ToggleButton Grid.Column="2" Margin="5" Width="50" Height="40" -->
+    <!--               x:FieldModifier="private" -->
+    <!--               x:Name="ButtonLock2">5m -->
+    <!-- </ToggleButton> -->
+    <!-- <ToggleButton Grid.Column="3" Margin="5" Width="50" Height="40" -->
+    <!--               x:FieldModifier="private" -->
+    <!--               x:Name="ButtonLock3">15m -->
+    <!-- </ToggleButton> -->
+    <!-- <ToggleButton Grid.Column="4" Margin="5" Width="50" Height="40" -->
+    <!--               x:FieldModifier="private" -->
+    <!--               x:Name="ButtonLock4">1h -->
+    <!-- </ToggleButton> -->
+    <!-- <ToggleButton Grid.Column="5" Margin="5" Width="50" Height="40" -->
+    <!--               x:FieldModifier="private" -->
+    <!--               x:Name="ButtonLock5">4h -->
+    <!-- </ToggleButton> -->
+    <!-- <ToggleButton Grid.Column="6" Margin="5" Width="50" Height="40" -->
+    <!--               x:FieldModifier="private" -->
+    <!--               x:Name="ButtonLock6">1d -->
+    <!-- </ToggleButton> -->
+    <StackPanel Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal" x:Name="buttonGroup">
+        <ToggleButton  Content="1m" Margin="5" Width="50" Height="40" IsChecked="True" Click="ToggleButton_Click"/>
+        <ToggleButton  Content="5m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
+        <ToggleButton  Content="15m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
+        <ToggleButton  Content="30m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
+        <ToggleButton  Content="1h" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
+        <ToggleButton  Content="4h" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
+    </StackPanel>
+
+    </Grid>
+</UserControl>
