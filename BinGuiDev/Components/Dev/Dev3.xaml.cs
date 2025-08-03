@@ -1,43 +1,54 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BinGuiDev.Components.Dev;
 
 public partial class Dev3 : UserControl
 {
-    public Dev3()
+    private long _unixTime;
+
+    public long UnixTime
     {
-        InitializeComponent();
-    }
-    
-    public class TimeValidationRule : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        get => _unixTime;
+        set
         {
-            if (string.IsNullOrEmpty(value?.ToString()))
-                return new ValidationResult(false, "Значення не може бути пустим");
-
-            if (!TimeSpan.TryParseExact(value.ToString(), 
-                    "hh\\:mm\\:ss", 
-                    CultureInfo.InvariantCulture, 
-                    out TimeSpan timeSpan))
+            if (_unixTime != value)
             {
-                return new ValidationResult(false, "Неправильний формат часу. Використовуйте формат ГГ:ХХ:СС");
+                _unixTime = value / 1000000;
+                DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime).UtcDateTime;
+                DatePicker.SelectedDate = dateTime.Date;
+                TimePicker.Text = dateTime.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
             }
-
-            // Додаткові перевірки при необхідності
-            if (timeSpan.Hours > 23)
-                return new ValidationResult(false, "Години не можуть бути більше 23");
-        
-            if (timeSpan.Minutes > 59)
-                return new ValidationResult(false, "Хвилини не можуть бути більше 59");
-        
-            if (timeSpan.Seconds > 59)
-                return new ValidationResult(false, "Секунди не можуть бути більше 59");
-
-            return ValidationResult.ValidResult;
         }
     }
 
+    private bool _enabledField;
+
+    public bool EnabledField
+    {
+        get => _enabledField;
+        set
+        {
+            if (_enabledField != value)
+            {
+                _enabledField = value;
+                DatePicker.IsEnabled = _enabledField;
+                TimePicker.IsEnabled = _enabledField;
+                ButtonLock.IsChecked = !_enabledField;
+            }
+        }
+    }
+
+    public Dev3()
+    {
+        InitializeComponent();
+        EnabledField = true;
+    }
+
+
+    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+    {
+        EnabledField = !ButtonLock.IsChecked ?? false;
+    }
 }

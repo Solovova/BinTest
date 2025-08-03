@@ -11,11 +11,18 @@ using System.Windows.Shapes;
 
 namespace BinGuiDev;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window{
-    public MainWindow(){
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
         InitializeComponent();
+    }
+
+    private void OnToggleButtonClick(object sender, RoutedEventArgs e)
+    {
+        StartDateTime.UnixTime = 1751328020233044;
+        EndDateTime.UnixTime = 1753747187975509;
+        StartDateTime.EnabledField = false;
+        EndDateTime.EnabledField = false;
     }
 }

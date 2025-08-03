@@ -7,11 +7,20 @@
         xmlns:dev="clr-namespace:BinGuiDev.Components.Dev"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
-    
-    
-    <Grid>
-        <dev:Dev3 />
 
+
+    <Grid Background="#212121">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="145" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="145" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <dev:Dev3 Grid.Row="0" Grid.Column="0" x:Name="StartDateTime" />
+        <dev:Dev3 Grid.Row="0" Grid.Column="2" x:Name="EndDateTime" />
+        <Button Grid.Row="1" Grid.Column="0" Click="OnToggleButtonClick">Тест</Button>
     </Grid>
 </Window>

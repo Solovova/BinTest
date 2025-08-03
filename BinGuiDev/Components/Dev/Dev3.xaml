@@ -19,9 +19,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="01.02.25" FontSize="16" Margin="5"
-                    SelectedDateFormat="Short">
+                    SelectedDateFormat="Short"
+                    x:FieldModifier="private"
+                    x:Name="DatePicker">
         </DatePicker>
-        <ToggleButton Grid.Row="1" Grid.Column="0" Margin="5" Width="40" Height="40">
+        <ToggleButton Grid.Row="1" Grid.Column="0" Margin="5" Width="40" Height="40"
+                      x:FieldModifier="private"
+                      x:Name="ButtonLock"
+                      Click="ButtonBase_OnClick">
             <Viewbox>
                 <Path x:Name="LockIcon"
                       Fill="Gray"
@@ -47,10 +52,10 @@
                 </Path>
             </Viewbox>
         </ToggleButton>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="00:00:00" FontSize="16" local:TimeValidationBehavior.EnableTimeValidation="True"
-        >
-            
-
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="00:00:00" FontSize="16"
+                 local:TimeValidationBehavior.EnableTimeValidation="True"
+                 x:FieldModifier="private"
+                 x:Name="TimePicker">
         </TextBox>
     </Grid>
 </UserControl>
