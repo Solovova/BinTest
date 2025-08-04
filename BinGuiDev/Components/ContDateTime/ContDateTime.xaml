@@ -25,7 +25,7 @@
                 <RowDefinition Height="50" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <local:UcSymbolPeriod Grid.Row="0"></local:UcSymbolPeriod>
+            <local:UcSymbolPeriod Grid.Row="0" x:Name="SymbolPeriod"></local:UcSymbolPeriod>
             <local:UcDuration Grid.Row="1" x:Name="DurationTime" ></local:UcDuration>
         </Grid>
     </Grid>

@@ -8,10 +8,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BinGuiDev.Components.ContDateTime;
 using Serilog;
 using Serilog.Events;
 
 namespace BinGuiDev;
+
+public class DataChangedEventArgsContDateTimeInfo(ContDateTimeInfo newValue) : EventArgs{
+    public ContDateTimeInfo NewValue{ get; } = newValue;
+}
 
 public partial class MainWindow : Window{
     public MainWindow(){
@@ -33,10 +38,24 @@ public partial class MainWindow : Window{
             .CreateLogger();
         
         InitializeComponent();
+        ContDateTime.DataChange += ContDateTimeOnDataChange;
+    }
+
+    private void ContDateTimeOnDataChange(object? sender, DataChangedEventArgsContDateTimeInfo e){
+        ContDateTimeInfo data = e.NewValue;
+        Log.Information($"Start:{data.StartUnixTime} End:{data.EndUnixTime} Symbol:{data.Symbol} Period:{data.Period}");
     }
 
     private void OnToggleButtonClick(object sender, RoutedEventArgs e){
-        ContDateTime.SetData();
+        ContDateTimeInfo contDateTimeInfo = new();
+        contDateTimeInfo.StartUnixTime = (long)(DateTime.UtcNow.Date - DateTime.UnixEpoch).TotalSeconds*1000000;
+        contDateTimeInfo.EndUnixTime = (long)(DateTime.UtcNow.Date.AddDays(1) - DateTime.UnixEpoch).TotalSeconds*1000000;
+        contDateTimeInfo.Symbol = "BTCUSDT";
+        contDateTimeInfo.Period = "15m";
+
+        ContDateTime.SetData(contDateTimeInfo);
         Log.Information("Button");
     }
+    
+    
 }

@@ -37,7 +37,7 @@ var dates = BinanceContext.GetDateFromRange(new DateTime(2025, 7, 28), new DateT
 
 //await BinanceCsvChecksums.VerifyAllChecksums("D:\\Downloads\\2025-03\\");
 
-await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
+//await BinanceCsvReader.ExtractMany(symbolsTop100, dates); 
 
 
 //await BinanceDbConvertToPeriod.ConvertAll(symbolsTop100);

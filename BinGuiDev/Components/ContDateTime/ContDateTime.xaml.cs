@@ -19,8 +19,13 @@ public class DataChangedEventArgsBool(bool newValue) : EventArgs{
     public bool NewValue{ get; } = newValue;
 }
 
+public class DataChangedEventArgsString(string newValue) : EventArgs{
+    public string NewValue{ get; } = newValue;
+}
+
 public partial class ContDateTime : UserControl{
     readonly ContDateTimeInfo _data;
+    public event EventHandler<DataChangedEventArgsContDateTimeInfo>? DataChange;
 
     public ContDateTime(){
         InitializeComponent();
@@ -34,6 +39,10 @@ public partial class ContDateTime : UserControl{
         EndDateTime.EnableChanged += MyComponent_EnableChangedEnd;
 
         DurationTime.EnableChanged += MyComponent_EnableChangedDuration;
+
+        SymbolPeriod.SymbolChanged += MyComponent_SymbolChanged;
+        SymbolPeriod.PeriodChanged += MyComponent_PeriodChanged;
+        
         DurationTime.SetEnabledField(false);
     }
 
@@ -56,6 +65,8 @@ public partial class ContDateTime : UserControl{
         else{
             DurationTime.SetUnixTime(EndDateTime.GetUnixTime() - StartDateTime.GetUnixTime());
         }
+        
+        DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
     }
 
     private void MyComponent_DataChangedEnd(object? sender, DataChangedEventArgsLong e){
@@ -69,6 +80,8 @@ public partial class ContDateTime : UserControl{
         else{
             DurationTime.SetUnixTime(EndDateTime.GetUnixTime() - StartDateTime.GetUnixTime());
         }
+        
+        DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
     }
 
     private void MyComponent_DataChangedDuration(object? sender, DataChangedEventArgsLong e){
@@ -89,6 +102,20 @@ public partial class ContDateTime : UserControl{
         EndDateTime.SetUnixTime(EndDateTime.GetUnixTime() + e.NewValue);
     }
 
+    private void MyComponent_PeriodChanged(object? sender, DataChangedEventArgsString e){
+        Log.Information("Змінено період: {ENewValue}", e.NewValue);
+        if (e?.NewValue == _data.Period) return;
+        _data.Period = e?.NewValue ?? string.Empty;
+        DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
+    }
+
+    private void MyComponent_SymbolChanged(object? sender, DataChangedEventArgsString e){
+        Log.Information("Змінено символ: {ENewValue}", e.NewValue);
+        if (e?.NewValue  == _data.Symbol) return;
+        _data.Symbol = e?.NewValue ?? string.Empty;
+        DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
+    }
+
     private void MyComponent_EnableChangedStart(object? sender, DataChangedEventArgsBool e){
         if (StartDateTime.GetEnabledField()) return;
         EndDateTime.SetEnabledField(true);
@@ -105,5 +132,17 @@ public partial class ContDateTime : UserControl{
         if (DurationTime.GetEnabledField()) return;
         StartDateTime.SetEnabledField(true);
         EndDateTime.SetEnabledField(true);
+    }
+
+    public void SetData(ContDateTimeInfo data){
+        data.StartUnixTime = data.StartUnixTime;
+        data.EndUnixTime = data.EndUnixTime;
+        data.Symbol = data.Symbol;
+        data.Period = data.Period;
+        
+        StartDateTime.SetUnixTime(data.StartUnixTime);
+        EndDateTime.SetUnixTime(data.EndUnixTime);
+        SymbolPeriod.SetSymbol(data.Symbol);
+        SymbolPeriod.SetPeriod(data.Period);
     }
 }
