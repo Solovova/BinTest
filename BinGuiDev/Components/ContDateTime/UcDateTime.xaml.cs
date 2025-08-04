@@ -24,22 +24,16 @@ public partial class UcDateTime : UserControl{
                 CultureInfo.InvariantCulture, out TimeSpan timeSpan))
             return;
         DateTime combinedDateTime = selectedDate.Value.Date + timeSpan;
-        _unixTime = ((long)(combinedDateTime - DateTime.UnixEpoch).TotalSeconds) * 1000000;
+        _unixTime = (long)(combinedDateTime - DateTime.UnixEpoch).TotalSeconds * 1000000;
         DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
-    }
-
-    private void UnixTimeChanged(bool inProgram = true){
-        DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime / 1000000).DateTime;
-        DatePicker.SelectedDate = dateTime.Date;
-        TimePicker.Text = dateTime.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
-
-        if (!inProgram) DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
     }
 
     public void SetUnixTime(long unixTime, bool inProgram = true){
         _suppressTextChanged = true;
         _unixTime = unixTime;
-        UnixTimeChanged(inProgram);
+        DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime / 1000000).DateTime;
+        DatePicker.SelectedDate = dateTime.Date;
+        TimePicker.Text = dateTime.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
         _suppressTextChanged = false;
     }
 

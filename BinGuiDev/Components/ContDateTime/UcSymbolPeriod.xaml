@@ -30,7 +30,7 @@
             <ToggleButton Content="1m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click" />
             <ToggleButton Content="5m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click" />
             <ToggleButton Content="15m" Margin="5" Width="50" Height="40" Click="ToggleButton_Click" />
-            <ToggleButton Content="1h" Margin="5" Width="50" Height="40" IsChecked="True"  Click="ToggleButton_Click" />
+            <ToggleButton Content="1h" Margin="5" Width="50" Height="40" Click="ToggleButton_Click" />
             <ToggleButton Content="4h" Margin="5" Width="50" Height="40" Click="ToggleButton_Click" />
             <ToggleButton Content="1d" Margin="5" Width="50" Height="40" Click="ToggleButton_Click"/>
         </StackPanel>

@@ -44,14 +44,20 @@ public partial class ContDateTime : UserControl{
         SymbolPeriod.PeriodChanged += MyComponent_PeriodChanged;
         
         DurationTime.SetEnabledField(false);
+        SetInitData();
     }
 
-    public void SetData(){
-        StartDateTime.SetUnixTime(1751328020233044);
-        //EndDateTime.SetUnixTime(1751328020233044+(long)24*60*60*1000000);;
-        //EndDateTime.SetUnixTime(1753747187975509);
-        //StartDateTime.SetEnabledField(false);
-        //EndDateTime.SetEnabledField(false);
+    private void SetInitData(){
+        ContDateTimeInfo contDateTimeInfo = new();
+        contDateTimeInfo.StartUnixTime = (long)(DateTime.UtcNow.Date - DateTime.UnixEpoch).TotalSeconds*1000000;
+        contDateTimeInfo.EndUnixTime = (long)(DateTime.UtcNow.Date.AddDays(1) - DateTime.UnixEpoch).TotalSeconds*1000000;
+        contDateTimeInfo.Symbol = "BTCUSDT";
+        contDateTimeInfo.Period = "15m";
+        _data.StartUnixTime = contDateTimeInfo.StartUnixTime;
+        _data.EndUnixTime = contDateTimeInfo.EndUnixTime;
+        _data.Symbol = contDateTimeInfo.Symbol;
+        _data.Period = contDateTimeInfo.Period;
+        SetData(contDateTimeInfo);
     }
 
     private void MyComponent_DataChangedStart(object? sender, DataChangedEventArgsLong e){
@@ -100,6 +106,7 @@ public partial class ContDateTime : UserControl{
         Log.Information("Дані рухаємо Duration: {ENewValue}", e.NewValue);
         StartDateTime.SetUnixTime(StartDateTime.GetUnixTime() + e.NewValue);
         EndDateTime.SetUnixTime(EndDateTime.GetUnixTime() + e.NewValue);
+        DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
     }
 
     private void MyComponent_PeriodChanged(object? sender, DataChangedEventArgsString e){
@@ -142,6 +149,7 @@ public partial class ContDateTime : UserControl{
         
         StartDateTime.SetUnixTime(data.StartUnixTime);
         EndDateTime.SetUnixTime(data.EndUnixTime);
+        DurationTime.SetUnixTime(data.EndUnixTime-data.StartUnixTime);
         SymbolPeriod.SetSymbol(data.Symbol);
         SymbolPeriod.SetPeriod(data.Period);
     }

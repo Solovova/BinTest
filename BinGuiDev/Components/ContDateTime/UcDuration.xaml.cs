@@ -73,7 +73,9 @@ public partial class UcDuration : UserControl{
         DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTimeDuration));
     }
 
-    private void UnixTimeDurationChanged(bool inProgram = true){
+    public void SetUnixTime(long unixTimeDuration, bool inProgram = true){
+        _suppressTextChanged = true;
+        _unixTimeDuration = unixTimeDuration;
         int days = (int)(_unixTimeDuration / 1000000 / 86400);
         int remainder = (int)((_unixTimeDuration / 1000000) % 86400);
 
@@ -84,13 +86,6 @@ public partial class UcDuration : UserControl{
         int seconds = remainder % 60;
 
         DurationTextBox.Text = $"{days:D4}:{hours:D2}:{minutes:D2}:{seconds:D2}";
-        if (!inProgram) DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTimeDuration));
-    }
-
-    public void SetUnixTime(long unixTimeDuration, bool inProgram = true){
-        _suppressTextChanged = true;
-        _unixTimeDuration = unixTimeDuration;
-        UnixTimeDurationChanged(inProgram);
         _suppressTextChanged = false;
     }
 
