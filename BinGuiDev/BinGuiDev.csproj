@@ -28,7 +28,7 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Components\ContDateTime\UcPeriod.xaml">
+      <Page Update="Components\ContDateTime\UcDuration.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>

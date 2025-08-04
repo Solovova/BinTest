@@ -6,6 +6,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:BinGuiDev.Components.Dev"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:contDateTime="clr-namespace:BinGuiDev.Components.ContDateTime"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="145">
 
@@ -55,7 +56,7 @@
             </Viewbox>
         </ToggleButton>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="00:00:00" FontSize="16"
-                 local:TimeValidationBehavior.EnableTimeValidation="True"
+                 contDateTime:TimeValidationBehavior.EnableTimeValidation="True"
                  x:FieldModifier="private"
                  x:Name="TimePicker"
                  ContextMenu="{x:Null}"

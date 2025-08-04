@@ -14,6 +14,9 @@ public partial class UcDateTime : UserControl{
     //DateTime
     private long _unixTime;
 
+    private bool _suppressTextChanged = false;
+
+
     private void ManualDateTimeChanged(){
         DateTime? selectedDate = DatePicker.SelectedDate;
         if (!selectedDate.HasValue)
@@ -22,29 +25,39 @@ public partial class UcDateTime : UserControl{
                 CultureInfo.InvariantCulture, out TimeSpan timeSpan))
             return;
         DateTime combinedDateTime = selectedDate.Value.Date + timeSpan;
-        _unixTime = new DateTimeOffset(combinedDateTime).ToUnixTimeSeconds() * 1000000;
+        _unixTime = ((long)(combinedDateTime - DateTime.UnixEpoch).TotalSeconds) * 1000000;
         DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
     }
 
-    private void UnixTimeChanged(){
-        DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime / 1000000).UtcDateTime;
+    private void UnixTimeChanged(bool inProgram = true){
+        DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime / 1000000).DateTime;
         DatePicker.SelectedDate = dateTime.Date;
         TimePicker.Text = dateTime.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
-        DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
+        
+        if (!inProgram) DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
     }
 
-    public void SetUnixTime(long unixTime){
+    public void SetUnixTime(long unixTime, bool inProgram = true){
+        _suppressTextChanged = true;
         _unixTime = unixTime;
-        UnixTimeChanged();
+        UnixTimeChanged(inProgram);
+        _suppressTextChanged = false;
     }
 
     //Enabled
     public void SetEnabledField(bool value){
-        var enabled = !ButtonLock.IsChecked ?? false;
-        ButtonLock.IsChecked = !enabled;
-        DatePicker.IsEnabled = enabled;
-        TimePicker.IsEnabled = enabled;
-        MainGrid.ContextMenu = enabled ? _menu : null;
+        ButtonLock.IsChecked = !value;
+        DatePicker.IsEnabled = value;
+        TimePicker.IsEnabled = value;
+        MainGrid.ContextMenu = value ? _menu : null;
+    }
+    
+    public bool GetEnabledField(){
+        return !ButtonLock.IsChecked ?? false;
+    }
+
+    public long GetUnixTime(){
+        return _unixTime;
     }
 
     private void ButtonEnable_OnClick(object sender, RoutedEventArgs e){
@@ -52,7 +65,9 @@ public partial class UcDateTime : UserControl{
             ButtonLock.IsChecked = true;
             return;
         }
-
+        
+        EnableChanged?.Invoke(this, new DataChangedEventArgsBool(!ButtonLock.IsChecked ?? false));
+        
         SetEnabledField(!ButtonLock.IsChecked ?? false);
     }
     //-----
@@ -84,10 +99,12 @@ public partial class UcDateTime : UserControl{
     }
 
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e){
+        if (_suppressTextChanged) return;
         ManualDateTimeChanged();
     }
 
     private void DatePicker_SelectedDateChanged(object? sender, SelectionChangedEventArgs e){
+        if (_suppressTextChanged) return;
         ManualDateTimeChanged();
     }
 }
