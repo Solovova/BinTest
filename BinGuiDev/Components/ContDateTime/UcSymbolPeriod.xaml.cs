@@ -2,11 +2,11 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace BinGuiDev.Components;
+namespace BinGuiDev.Components.ContDateTime;
 
-public partial class UCSymbolPeriod : UserControl
+public partial class UcSymbolPeriod : UserControl
 {
-    public UCSymbolPeriod()
+    public UcSymbolPeriod()
     {
         InitializeComponent();
     }

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="BinGuiDev.Components.ContDateTime.ContDateTime"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BinGuiDev.Components.ContDateTime"
+             xmlns:dev="clr-namespace:BinGuiDev.Components.Dev"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="850"
+             Height="450" MinWidth="850">
+    <Grid Background="#212121">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="145" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="145" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <local:UcDateTime Grid.Row="0" Grid.Column="0" x:Name="StartDateTime" />
+        <local:UcDateTime Grid.Row="0" Grid.Column="2" x:Name="EndDateTime" />
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <local:UcSymbolPeriod Grid.Row="0"></local:UcSymbolPeriod>
+            <local:UcPeriod Grid.Row="1"></local:UcPeriod>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -20,9 +20,5 @@ public partial class MainWindow : Window
 
     private void OnToggleButtonClick(object sender, RoutedEventArgs e)
     {
-        StartDateTime.UnixTime = 1751328020233044;
-        EndDateTime.UnixTime = 1753747187975509;
-        StartDateTime.EnabledField = false;
-        EndDateTime.EnabledField = false;
     }
 }

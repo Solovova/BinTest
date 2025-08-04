@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BinGuiDev.Components.Dev;
+namespace BinGuiDev.Components.ContDateTime;
 
-public partial class Dev3 : UserControl
+public partial class UcDateTime : UserControl
 {
     private long _unixTime;
 
@@ -40,7 +40,7 @@ public partial class Dev3 : UserControl
         }
     }
 
-    public Dev3()
+    public UcDateTime()
     {
         InitializeComponent();
         EnabledField = true;

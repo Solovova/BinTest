@@ -6,30 +6,20 @@
         xmlns:local="clr-namespace:BinGuiDev"
         xmlns:dev="clr-namespace:BinGuiDev.Components.Dev"
         xmlns:components="clr-namespace:BinGuiDev.Components"
+        xmlns:contDateTime="clr-namespace:BinGuiDev.Components.ContDateTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="850" MinWidth="850">
+        Title="MainWindow">
 
 
     <Grid Background="#212121">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="145" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="145" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <dev:Dev3 Grid.Row="0" Grid.Column="0" x:Name="StartDateTime" />
-        <dev:Dev3 Grid.Row="0" Grid.Column="2" x:Name="EndDateTime" />
+        <contDateTime:ContDateTime Grid.Row="0"></contDateTime:ContDateTime>
         <Button Grid.Row="1" Grid.Column="0" Click="OnToggleButtonClick">Тест</Button>
-        <Grid Grid.Row="0" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-            <components:UCSymbolPeriod Grid.Row="0"></components:UCSymbolPeriod>
-            <components:UCPeriod Grid.Row="1"></components:UCPeriod>
-        </Grid>
     </Grid>
 </Window>
