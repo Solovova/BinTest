@@ -20,9 +20,18 @@
         </Grid.ColumnDefinitions>
 
         <ComboBox Grid.Column="0" Margin="5" Width="150" Height="40"
+                  IsEditable="True"
+                  IsTextSearchEnabled="False"
+                  ItemsSource="{Binding SymbolCollection.FilteredItems}"
+                  StaysOpenOnEdit="True"
+                  KeyUp="ComboBoxSymbol_KeyUp"
+                  
                   x:FieldModifier="private"
                   x:Name="ComboBoxSymbol"
-                  SelectionChanged="ComboBoxSymbol_OnSelectionChanged">
+                  SelectionChanged="ComboBoxSymbol_OnSelectionChanged"
+                  GotFocus="ComboBoxSymbol_OnGotFocus"
+                  LostFocus="ComboBoxSymbol_OnLostFocus"
+                  >
         </ComboBox>
         
         <StackPanel Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal" x:Name="ButtonGroup">
