@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="145">
 
-    <Grid Height="100" Width="145" Background="#212121">
+    <Grid Height="100" Width="145" Background="#212121" x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50" />
             <ColumnDefinition Width="*" />
@@ -18,10 +18,12 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="01.02.25" FontSize="16" Margin="5"
                     SelectedDateFormat="Short"
                     x:FieldModifier="private"
-                    x:Name="DatePicker">
+                    x:Name="DatePicker"
+                    ContextMenu="{x:Null}">
         </DatePicker>
         <ToggleButton Grid.Row="1" Grid.Column="0" Margin="5" Width="40" Height="40"
                       x:FieldModifier="private"
@@ -55,7 +57,9 @@
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="00:00:00" FontSize="16"
                  local:TimeValidationBehavior.EnableTimeValidation="True"
                  x:FieldModifier="private"
-                 x:Name="TimePicker">
+                 x:Name="TimePicker"
+                 ContextMenu="{x:Null}"
+                 TextChanged="TextBox_TextChanged">
         </TextBox>
     </Grid>
 </UserControl>
