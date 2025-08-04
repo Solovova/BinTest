@@ -11,14 +11,12 @@ using System.Windows.Shapes;
 
 namespace BinGuiDev;
 
-public partial class MainWindow : Window
-{
-    public MainWindow()
-    {
+public partial class MainWindow : Window{
+    public MainWindow(){
         InitializeComponent();
     }
 
-    private void OnToggleButtonClick(object sender, RoutedEventArgs e)
-    {
+    private void OnToggleButtonClick(object sender, RoutedEventArgs e){
+        ContDateTime.SetData();
     }
 }

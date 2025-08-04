@@ -4,15 +4,12 @@ using System.Windows.Controls.Primitives;
 
 namespace BinGuiDev.Components.ContDateTime;
 
-public partial class UcSymbolPeriod : UserControl
-{
-    public UcSymbolPeriod()
-    {
+public partial class UcSymbolPeriod : UserControl{
+    public UcSymbolPeriod(){
         InitializeComponent();
     }
 
-    private void ToggleButton_Click(object sender, RoutedEventArgs e)
-    {
+    private void ToggleButton_Click(object sender, RoutedEventArgs e){
         if (sender is not ToggleButton clickedButton) return;
 
         if (clickedButton.IsChecked == false){
@@ -21,8 +18,7 @@ public partial class UcSymbolPeriod : UserControl
         }
 
         buttonGroup.Tag = "Updating";
-        foreach (var button in buttonGroup.Children.OfType<ToggleButton>())
-        {
+        foreach (var button in buttonGroup.Children.OfType<ToggleButton>()){
             if (button != clickedButton)
                 button.IsChecked = false;
         }

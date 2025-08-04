@@ -2,10 +2,8 @@
 
 namespace BinGuiDev.Components.ContDateTime;
 
-public partial class UcPeriod : UserControl
-{
-    public UcPeriod()
-    {
+public partial class UcPeriod : UserControl{
+    public UcPeriod(){
         InitializeComponent();
     }
 }

@@ -6,8 +6,7 @@ using System.Windows.Media;
 
 namespace BinGuiDev.Components.Dev;
 
-public class TimeValidationBehavior
-{
+public class TimeValidationBehavior{
     private static readonly DependencyProperty LastValidValueProperty =
         DependencyProperty.RegisterAttached(
             "LastValidValue",
@@ -34,10 +33,8 @@ public class TimeValidationBehavior
     private static void SetLastValidValue(DependencyObject obj, string value) =>
         obj.SetValue(LastValidValueProperty, value);
 
-    private static void OnEnableTimeValidationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is TextBox textBox && (bool)e.NewValue)
-        {
+    private static void OnEnableTimeValidationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e){
+        if (d is TextBox textBox && (bool)e.NewValue){
             textBox.PreviewTextInput += OnPreviewTextInput;
             textBox.PreviewKeyDown += OnPreviewKeyDown;
             textBox.GotFocus += OnGotFocus;
@@ -51,29 +48,24 @@ public class TimeValidationBehavior
         }
     }
 
-    private static void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
-        if (sender is not TextBox textBox || !char.IsDigit(e.Text[0]))
-        {
+    private static void OnPreviewTextInput(object sender, TextCompositionEventArgs e){
+        if (sender is not TextBox textBox || !char.IsDigit(e.Text[0])){
             e.Handled = true;
             return;
         }
 
         var caretIndex = textBox.CaretIndex;
 
-        if (caretIndex == 2 || caretIndex == 5)
-        {
+        if (caretIndex == 2 || caretIndex == 5){
             caretIndex += 1;
             textBox.CaretIndex = caretIndex;
         }
 
-        if (caretIndex < 8)
-        {
+        if (caretIndex < 8){
             var newText = new StringBuilder(textBox.Text);
             newText[caretIndex] = e.Text[0];
 
-            if (IsValidTimeValue(newText.ToString()))
-            {
+            if (IsValidTimeValue(newText.ToString())){
                 textBox.Text = newText.ToString();
                 SetLastValidValue(textBox, newText.ToString());
             }
@@ -86,8 +78,7 @@ public class TimeValidationBehavior
         e.Handled = true;
     }
 
-    private static bool IsValidTimeValue(string timeText)
-    {
+    private static bool IsValidTimeValue(string timeText){
         if (timeText.Length != 8) return false;
 
         var hours = int.Parse(timeText.Substring(0, 2));
@@ -97,42 +88,32 @@ public class TimeValidationBehavior
         return hours <= 23 && minutes <= 59 && seconds <= 59;
     }
 
-    private static void OnKeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Enter && sender is TextBox textBox)
-        {
+    private static void OnKeyDown(object sender, KeyEventArgs e){
+        if (e.Key == Key.Enter && sender is TextBox textBox){
             ValidateAndRestore(textBox);
         }
     }
 
-    private static void OnPreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Space)
-        {
+    private static void OnPreviewKeyDown(object sender, KeyEventArgs e){
+        if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Space){
             e.Handled = true;
         }
     }
 
-    private static void OnGotFocus(object sender, RoutedEventArgs e)
-    {
-        if (sender is TextBox textBox)
-        {
+    private static void OnGotFocus(object sender, RoutedEventArgs e){
+        if (sender is TextBox textBox){
             textBox.CaretIndex = 0;
         }
     }
 
-    private static void OnLostFocus(object sender, RoutedEventArgs e)
-    {
-        if (sender is TextBox textBox)
-        {
+    private static void OnLostFocus(object sender, RoutedEventArgs e){
+        if (sender is TextBox textBox){
             ValidateAndRestore(textBox);
         }
     }
 
-    private static void ValidateAndRestore(TextBox textBox)
-    {
-        if (!IsValidTimeValue(textBox.Text))
-        {
+    private static void ValidateAndRestore(TextBox textBox){
+        if (!IsValidTimeValue(textBox.Text)){
             textBox.Text = GetLastValidValue(textBox);
         }
     }

@@ -26,7 +26,7 @@
         <ToggleButton Grid.Row="1" Grid.Column="0" Margin="5" Width="40" Height="40"
                       x:FieldModifier="private"
                       x:Name="ButtonLock"
-                      Click="ButtonBase_OnClick">
+                      Click="ButtonEnable_OnClick">
             <Viewbox>
                 <Path x:Name="LockIcon"
                       Fill="Gray"
