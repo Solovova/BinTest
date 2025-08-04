@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Serilog;
 
 namespace BinGuiDev.Components.ContDateTime;
 
@@ -18,10 +17,10 @@ public partial class UcDateTime : UserControl{
 
 
     private void ManualDateTimeChanged(){
-        DateTime? selectedDate = DatePicker.SelectedDate;
+        var selectedDate = DatePicker.SelectedDate;
         if (!selectedDate.HasValue)
             return;
-        if (!TimeSpan.TryParseExact(TimePicker.Text, "hh\\:mm\\:ss",
+        if (!TimeSpan.TryParseExact(TimePicker.Text, @"hh\:mm\:ss",
                 CultureInfo.InvariantCulture, out TimeSpan timeSpan))
             return;
         DateTime combinedDateTime = selectedDate.Value.Date + timeSpan;
@@ -33,7 +32,7 @@ public partial class UcDateTime : UserControl{
         DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(_unixTime / 1000000).DateTime;
         DatePicker.SelectedDate = dateTime.Date;
         TimePicker.Text = dateTime.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
-        
+
         if (!inProgram) DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
     }
 
@@ -51,7 +50,7 @@ public partial class UcDateTime : UserControl{
         TimePicker.IsEnabled = value;
         MainGrid.ContextMenu = value ? _menu : null;
     }
-    
+
     public bool GetEnabledField(){
         return !ButtonLock.IsChecked ?? false;
     }
@@ -65,9 +64,9 @@ public partial class UcDateTime : UserControl{
             ButtonLock.IsChecked = true;
             return;
         }
-        
+
         EnableChanged?.Invoke(this, new DataChangedEventArgsBool(!ButtonLock.IsChecked ?? false));
-        
+
         SetEnabledField(!ButtonLock.IsChecked ?? false);
     }
     //-----
@@ -75,8 +74,8 @@ public partial class UcDateTime : UserControl{
     public UcDateTime(){
         InitializeComponent();
 
-        RoutedCommand startOfDate = new ();
-        RoutedCommand endOfDate = new ();
+        RoutedCommand startOfDate = new();
+        RoutedCommand endOfDate = new();
         _menu = new ContextMenu();
         _menu.Items.Add(new MenuItem{ Header = "Start of date", Command = startOfDate });
         _menu.Items.Add(new MenuItem{ Header = "End of date", Command = endOfDate });

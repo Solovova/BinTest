@@ -63,10 +63,10 @@ public partial class UcDuration : UserControl{
 
         long unixTime = 0;
         if (parts.Length == 4){
-            unixTime = int.Parse(parts[0]) * 86400 // дні в секунди
-                       + int.Parse(parts[1]) * 3600 // години в секунди
-                       + int.Parse(parts[2]) * 60 // хвилини в секунди
-                       + int.Parse(parts[3]); // секунди
+            unixTime = int.Parse(parts[0]) * 86400 
+                       + int.Parse(parts[1]) * 3600
+                       + int.Parse(parts[2]) * 60 
+                       + int.Parse(parts[3]); 
         }
 
         _unixTimeDuration = unixTime * 1000000;
@@ -109,17 +109,16 @@ public partial class UcDuration : UserControl{
 
         long unixTime = 0;
         if (parts.Length == 4){
-            unixTime = int.Parse(parts[0]) * 86400 // дні в секунди
-                       + int.Parse(parts[1]) * 3600 // години в секунди
-                       + int.Parse(parts[2]) * 60 // хвилини в секунди
-                       + int.Parse(parts[3]); // секунди
+            unixTime = int.Parse(parts[0]) * 86400 
+                       + int.Parse(parts[1]) * 3600
+                       + int.Parse(parts[2]) * 60 
+                       + int.Parse(parts[3]); 
         }
-
         return unixTime * 1000000;
     }
 
     private void ButtonBase_OnClickLeft(object sender, RoutedEventArgs e){
-        ClickLeftRight?.Invoke(this, new DataChangedEventArgsLong(-1*GetStepDateTime()));
+        ClickLeftRight?.Invoke(this, new DataChangedEventArgsLong(-1 * GetStepDateTime()));
     }
 
     private void ButtonBase_OnClickRight(object sender, RoutedEventArgs e){

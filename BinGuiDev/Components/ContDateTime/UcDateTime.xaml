@@ -19,7 +19,7 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="01.02.25" FontSize="16" Margin="5"
                     SelectedDateFormat="Short"
                     x:FieldModifier="private"

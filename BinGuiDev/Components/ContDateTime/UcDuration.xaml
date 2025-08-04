@@ -15,24 +15,27 @@
             <ColumnDefinition Width="130" />
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
-        
-        
-       
-        <Button Grid.Column="0" Margin="5" Width="50" Height="40" Content="&lt;"
-                      Click="ButtonBase_OnClickLeft">
+
+
+        <Button Grid.Column="0" Margin="5" Width="50" Height="40" Click="ButtonBase_OnClickLeft">
+            <Viewbox>
+                <Path Fill="Gray" Data="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" Stretch="Uniform"/>
+            </Viewbox>
         </Button>
-        
+
         <TextBox Grid.Column="1" Margin="5" Width="120" Height="40" Text="0000:00:00:00"
                  FontSize="16"
                  contDateTime:DurationValidationBehavior.EnableDurationValidation="True"
                  x:Name="StepTextBox"
                  ContextMenu="{x:Null}">
         </TextBox>
-        
-        <Button Grid.Column="2" Margin="5" Width="50" Height="40" Content=">"
-                Click="ButtonBase_OnClickRight">
+
+        <Button Grid.Column="2" Margin="5" Width="50" Height="40" Click="ButtonBase_OnClickRight">
+            <Viewbox>
+                <Path Fill="Gray" Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" Stretch="Uniform"/>
+            </Viewbox>
         </Button>
-        
+
         <TextBox Grid.Column="3" Margin="5" Width="120" Height="40" Text="0000:00:00:00"
                  FontSize="16"
                  contDateTime:DurationValidationBehavior.EnableDurationValidation="True"
@@ -40,7 +43,7 @@
                  ContextMenu="{x:Null}"
                  TextChanged="DurationTextBox_TextChanged">
         </TextBox>
-        
+
         <ToggleButton Grid.Column="4" Margin="5" Width="40" Height="40"
                       x:FieldModifier="private"
                       Click="ButtonEnable_OnClick"

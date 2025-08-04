@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Serilog;
 
 namespace BinGuiDev.Components.ContDateTime;
 
@@ -34,18 +33,17 @@ public class DurationValidationBehavior{
         obj.SetValue(LastValidValueProperty, value);
 
     private static void OnEnableDurationValidationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e){
-        if (d is TextBox textBox && (bool)e.NewValue){
-            textBox.PreviewTextInput += OnPreviewTextInput;
-            textBox.PreviewKeyDown += OnPreviewKeyDown;
-            textBox.GotFocus += OnGotFocus;
-            textBox.LostFocus += OnLostFocus;
-            textBox.KeyDown += OnKeyDown;
+        if (d is not TextBox textBox || !(bool)e.NewValue) return;
+        textBox.PreviewTextInput += OnPreviewTextInput;
+        textBox.PreviewKeyDown += OnPreviewKeyDown;
+        textBox.GotFocus += OnGotFocus;
+        textBox.LostFocus += OnLostFocus;
+        textBox.KeyDown += OnKeyDown;
 
-            textBox.MaxLength = 8 + 5;
-            var initialValue = "0000:00:00:00";
-            textBox.Text = initialValue;
-            SetLastValidValue(textBox, initialValue);
-        }
+        textBox.MaxLength = 8 + 5;
+        const string initialValue = "0000:00:00:00";
+        textBox.Text = initialValue;
+        SetLastValidValue(textBox, initialValue);
     }
 
     private static void OnPreviewTextInput(object sender, TextCompositionEventArgs e){
@@ -54,16 +52,17 @@ public class DurationValidationBehavior{
             return;
         }
 
-        var caretIndex = textBox.CaretIndex;
+        int caretIndex = textBox.CaretIndex;
 
-        if (caretIndex == 4 || caretIndex == 7 || caretIndex == 10){
+        if (caretIndex is 4 or 7 or 10){
             caretIndex += 1;
             textBox.CaretIndex = caretIndex;
         }
 
         if (caretIndex < 13){
-            var newText = new StringBuilder(textBox.Text);
-            newText[caretIndex] = e.Text[0];
+            StringBuilder newText = new(textBox.Text){
+                [caretIndex] = e.Text[0]
+            };
 
             if (IsValidTimeValue(newText.ToString())){
                 textBox.Text = newText.ToString();
@@ -71,7 +70,7 @@ public class DurationValidationBehavior{
             }
 
             textBox.CaretIndex = Math.Min(caretIndex + 1, 12);
-            if (textBox.CaretIndex == 4 || textBox.CaretIndex == 7 || textBox.CaretIndex == 10)
+            if (textBox.CaretIndex is 4 or 7 or 10)
                 textBox.CaretIndex += 1;
         }
 
@@ -80,9 +79,9 @@ public class DurationValidationBehavior{
 
     private static bool IsValidTimeValue(string timeText){
         if (timeText.Length != 13) return false;
-        var hours = int.Parse(timeText.Substring(5, 2));
-        var minutes = int.Parse(timeText.Substring(8, 2));
-        var seconds = int.Parse(timeText.Substring(11, 2));
+        int hours = int.Parse(timeText.Substring(5, 2));
+        int minutes = int.Parse(timeText.Substring(8, 2));
+        int seconds = int.Parse(timeText.Substring(11, 2));
         return hours <= 23 && minutes <= 59 && seconds <= 59;
     }
 
@@ -93,7 +92,7 @@ public class DurationValidationBehavior{
     }
 
     private static void OnPreviewKeyDown(object sender, KeyEventArgs e){
-        if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Space){
+        if (e.Key is Key.Back or Key.Delete or Key.Space){
             e.Handled = true;
         }
     }

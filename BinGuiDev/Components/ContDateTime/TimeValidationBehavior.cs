@@ -33,18 +33,17 @@ public class TimeValidationBehavior{
         obj.SetValue(LastValidValueProperty, value);
 
     private static void OnEnableTimeValidationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e){
-        if (d is TextBox textBox && (bool)e.NewValue){
-            textBox.PreviewTextInput += OnPreviewTextInput;
-            textBox.PreviewKeyDown += OnPreviewKeyDown;
-            textBox.GotFocus += OnGotFocus;
-            textBox.LostFocus += OnLostFocus;
-            textBox.KeyDown += OnKeyDown;
+        if (d is not TextBox textBox || !(bool)e.NewValue) return;
+        textBox.PreviewTextInput += OnPreviewTextInput;
+        textBox.PreviewKeyDown += OnPreviewKeyDown;
+        textBox.GotFocus += OnGotFocus;
+        textBox.LostFocus += OnLostFocus;
+        textBox.KeyDown += OnKeyDown;
 
-            textBox.MaxLength = 8;
-            var initialValue = "00:00:00";
-            textBox.Text = initialValue;
-            SetLastValidValue(textBox, initialValue);
-        }
+        textBox.MaxLength = 8;
+        const string initialValue = "00:00:00";
+        textBox.Text = initialValue;
+        SetLastValidValue(textBox, initialValue);
     }
 
     private static void OnPreviewTextInput(object sender, TextCompositionEventArgs e){
@@ -53,16 +52,17 @@ public class TimeValidationBehavior{
             return;
         }
 
-        var caretIndex = textBox.CaretIndex;
+        int caretIndex = textBox.CaretIndex;
 
-        if (caretIndex == 2 || caretIndex == 5){
+        if (caretIndex is 2 or 5){
             caretIndex += 1;
             textBox.CaretIndex = caretIndex;
         }
 
         if (caretIndex < 8){
-            var newText = new StringBuilder(textBox.Text);
-            newText[caretIndex] = e.Text[0];
+            StringBuilder newText = new(textBox.Text){
+                [caretIndex] = e.Text[0]
+            };
 
             if (IsValidTimeValue(newText.ToString())){
                 textBox.Text = newText.ToString();
@@ -70,7 +70,7 @@ public class TimeValidationBehavior{
             }
 
             textBox.CaretIndex = Math.Min(caretIndex + 1, 7);
-            if (textBox.CaretIndex == 2 || textBox.CaretIndex == 5)
+            if (textBox.CaretIndex is 2 or 5)
                 textBox.CaretIndex += 1;
         }
 
@@ -80,9 +80,9 @@ public class TimeValidationBehavior{
     private static bool IsValidTimeValue(string timeText){
         if (timeText.Length != 8) return false;
 
-        var hours = int.Parse(timeText.Substring(0, 2));
-        var minutes = int.Parse(timeText.Substring(3, 2));
-        var seconds = int.Parse(timeText.Substring(6, 2));
+        int hours = int.Parse(timeText.Substring(0, 2));
+        int minutes = int.Parse(timeText.Substring(3, 2));
+        int seconds = int.Parse(timeText.Substring(6, 2));
 
         return hours <= 23 && minutes <= 59 && seconds <= 59;
     }
@@ -94,7 +94,7 @@ public class TimeValidationBehavior{
     }
 
     private static void OnPreviewKeyDown(object sender, KeyEventArgs e){
-        if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Space){
+        if (e.Key is Key.Back or Key.Delete or Key.Space){
             e.Handled = true;
         }
     }
