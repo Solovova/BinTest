@@ -100,10 +100,12 @@ public partial class UcSymbolPeriod : UserControl{
     }
 
     private void ComboBoxSymbol_OnGotFocus(object sender, RoutedEventArgs e){
+        _suppressTextChanged = true;
         ComboBoxSymbol.SelectedItem = null;
         ComboBoxSymbol.Text = string.Empty;
         SymbolCollection.ApplyFilter(string.Empty);
         ComboBoxSymbol.IsDropDownOpen = true;
+        _suppressTextChanged = false;
     }
 
     private void ComboBoxSymbol_OnLostFocus(object sender, RoutedEventArgs e){
