@@ -119,4 +119,8 @@ public partial class UcDuration : UserControl{
     private void ButtonBase_OnClickRight(object sender, RoutedEventArgs e){
         ClickLeftRight?.Invoke(this, new DataChangedEventArgsLong(GetStepDateTime()));
     }
+
+    public void SetStep(string step){
+        StepTextBox.Text = step;   
+    }
 }

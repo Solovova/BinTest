@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Serilog;
 
 namespace BinGuiDev.Components.ContDateTime;
 
@@ -61,7 +62,7 @@ public partial class UcSymbolPeriod : UserControl{
 
     private void ComboBoxSymbol_OnSelectionChanged(object sender, SelectionChangedEventArgs e){
         if (_suppressTextChanged) return;
-        _symbol = ComboBoxSymbol.Text;
+        _symbol = ((ComboBoxItem)ComboBoxSymbol.SelectedItem)?.Content.ToString() ?? string.Empty;
         SymbolChanged?.Invoke(this, new DataChangedEventArgsString(_symbol));
     }
 }

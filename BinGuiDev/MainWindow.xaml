@@ -7,19 +7,12 @@
         xmlns:dev="clr-namespace:BinGuiDev.Components.Dev"
         xmlns:components="clr-namespace:BinGuiDev.Components"
         xmlns:contDateTime="clr-namespace:BinGuiDev.Components.ContDateTime"
+        xmlns:contMain="clr-namespace:BinGuiDev.Components.ContMain"
         mc:Ignorable="d"
         Title="MainWindow">
 
 
     <Grid Background="#212121">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <contDateTime:ContDateTime Grid.Row="0" x:Name="ContDateTime"></contDateTime:ContDateTime>
-        <Button Grid.Row="1" Grid.Column="0" Click="OnToggleButtonClick">Тест</Button>
+        <contMain:ContMain></contMain:ContMain>
     </Grid>
 </Window>

@@ -4,12 +4,7 @@ using Serilog;
 
 namespace BinGuiDev.Components.ContDateTime;
 
-public class ContDateTimeInfo{
-    public long StartUnixTime;
-    public long EndUnixTime;
-    public string Symbol;
-    public string Period;
-}
+
 
 public class DataChangedEventArgsLong(long newValue) : EventArgs{
     public long NewValue{ get; } = newValue;
@@ -58,6 +53,7 @@ public partial class ContDateTime : UserControl{
         _data.Symbol = contDateTimeInfo.Symbol;
         _data.Period = contDateTimeInfo.Period;
         SetData(contDateTimeInfo);
+        DurationTime.SetStep("0001:00:00:00");
     }
 
     private void MyComponent_DataChangedStart(object? sender, DataChangedEventArgsLong e){
@@ -104,8 +100,10 @@ public partial class ContDateTime : UserControl{
 
     private void MyComponent_DataChangedDurationLeftRight(object? sender, DataChangedEventArgsLong e){
         Log.Information("Дані рухаємо Duration: {ENewValue}", e.NewValue);
-        StartDateTime.SetUnixTime(StartDateTime.GetUnixTime() + e.NewValue);
-        EndDateTime.SetUnixTime(EndDateTime.GetUnixTime() + e.NewValue);
+        _data.StartUnixTime += e.NewValue;
+        _data.EndUnixTime += e.NewValue;
+        StartDateTime.SetUnixTime(_data.StartUnixTime);
+        EndDateTime.SetUnixTime(_data.EndUnixTime);
         DataChange?.Invoke(this, new DataChangedEventArgsContDateTimeInfo(_data));
     }
 
@@ -152,5 +150,9 @@ public partial class ContDateTime : UserControl{
         DurationTime.SetUnixTime(data.EndUnixTime-data.StartUnixTime);
         SymbolPeriod.SetSymbol(data.Symbol);
         SymbolPeriod.SetPeriod(data.Period);
+    }
+
+    public ContDateTimeInfo GetData(){
+        return _data;
     }
 }
