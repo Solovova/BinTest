@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Microsoft.Xaml.Behaviors.Core;
 
 namespace BinGuiDev.Components.ContChart;
 
