@@ -62,6 +62,7 @@ public partial class ContDateTime : UserControl{
         Log.Information("Дані змінились Start: {ENewValue}", e.NewValue);
 
         if (EndDateTime.GetEnabledField()){
+            _data.EndUnixTime = _data.StartUnixTime + DurationTime.GetUnixTime();
             EndDateTime.SetUnixTime(StartDateTime.GetUnixTime() + DurationTime.GetUnixTime());
         }
         else{
@@ -77,6 +78,7 @@ public partial class ContDateTime : UserControl{
         Log.Information("Дані змінились End: {ENewValue}", e.NewValue);
 
         if (StartDateTime.GetEnabledField()){
+            _data.StartUnixTime = _data.EndUnixTime - DurationTime.GetUnixTime();
             StartDateTime.SetUnixTime(EndDateTime.GetUnixTime() - DurationTime.GetUnixTime());
         }
         else{
@@ -91,9 +93,11 @@ public partial class ContDateTime : UserControl{
         if (oldValue == e.NewValue) return;
         Log.Information("Дані змінились Duration: {ENewValue}", e.NewValue);
         if (StartDateTime.GetEnabledField()){
+            _data.StartUnixTime = _data.EndUnixTime - DurationTime.GetUnixTime();
             StartDateTime.SetUnixTime(EndDateTime.GetUnixTime() - DurationTime.GetUnixTime());
         }
         else{
+            _data.EndUnixTime = _data.StartUnixTime + DurationTime.GetUnixTime();
             EndDateTime.SetUnixTime(StartDateTime.GetUnixTime() + DurationTime.GetUnixTime());
         }
     }
