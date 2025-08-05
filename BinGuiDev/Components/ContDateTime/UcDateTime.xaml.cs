@@ -7,8 +7,8 @@ namespace BinGuiDev.Components.ContDateTime;
 
 public partial class UcDateTime : UserControl{
     private readonly ContextMenu _menu;
-    public event EventHandler<DataChangedEventArgsLong>? DataChanged;
-    public event EventHandler<DataChangedEventArgsBool>? EnableChanged;
+    public event EventHandler<long>? DataChanged;
+    public event EventHandler<bool>? EnableChanged;
 
     //DateTime
     private long _unixTime;
@@ -25,7 +25,7 @@ public partial class UcDateTime : UserControl{
             return;
         DateTime combinedDateTime = selectedDate.Value.Date + timeSpan;
         _unixTime = (long)(combinedDateTime - DateTime.UnixEpoch).TotalSeconds * 1000000;
-        DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTime));
+        DataChanged?.Invoke(this, _unixTime);
     }
 
     public void SetUnixTime(long unixTime, bool inProgram = true){
@@ -59,7 +59,7 @@ public partial class UcDateTime : UserControl{
             return;
         }
 
-        EnableChanged?.Invoke(this, new DataChangedEventArgsBool(!ButtonLock.IsChecked ?? false));
+        EnableChanged?.Invoke(this, !ButtonLock.IsChecked ?? false);
 
         SetEnabledField(!ButtonLock.IsChecked ?? false);
     }

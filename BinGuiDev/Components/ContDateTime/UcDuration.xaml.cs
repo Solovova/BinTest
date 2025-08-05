@@ -8,12 +8,12 @@ namespace BinGuiDev.Components.ContDateTime;
 public partial class UcDuration : UserControl{
     private readonly ContextMenu _menu;
     private long _unixTimeDuration;
-    private bool _suppressTextChanged = false;
+    private bool _suppressTextChanged;
 
-    public event EventHandler<DataChangedEventArgsBool>? EnableChanged;
+    public event EventHandler<bool>? EnableChanged;
 
-    public event EventHandler<DataChangedEventArgsLong>? DataChanged;
-    public event EventHandler<DataChangedEventArgsLong>? ClickLeftRight;
+    public event EventHandler<long>? DataChanged;
+    public event EventHandler<long>? ClickLeftRight;
 
     public UcDuration(){
         InitializeComponent();
@@ -45,7 +45,7 @@ public partial class UcDuration : UserControl{
             return;
         }
 
-        EnableChanged?.Invoke(this, new DataChangedEventArgsBool(!ButtonLock.IsChecked ?? false));
+        EnableChanged?.Invoke(this, !ButtonLock.IsChecked ?? false);
         SetEnabledField(!ButtonLock.IsChecked ?? false);
     }
 
@@ -70,7 +70,7 @@ public partial class UcDuration : UserControl{
         }
 
         _unixTimeDuration = unixTime * 1000000;
-        DataChanged?.Invoke(this, new DataChangedEventArgsLong(_unixTimeDuration));
+        DataChanged?.Invoke(this, _unixTimeDuration);
     }
 
     public void SetUnixTime(long unixTimeDuration, bool inProgram = true){
@@ -113,11 +113,11 @@ public partial class UcDuration : UserControl{
     }
 
     private void ButtonBase_OnClickLeft(object sender, RoutedEventArgs e){
-        ClickLeftRight?.Invoke(this, new DataChangedEventArgsLong(-1 * GetStepDateTime()));
+        ClickLeftRight?.Invoke(this, -1 * GetStepDateTime());
     }
 
     private void ButtonBase_OnClickRight(object sender, RoutedEventArgs e){
-        ClickLeftRight?.Invoke(this, new DataChangedEventArgsLong(GetStepDateTime()));
+        ClickLeftRight?.Invoke(this, GetStepDateTime());
     }
 
     public void SetStep(string step){

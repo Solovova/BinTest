@@ -12,8 +12,8 @@ public partial class ContMain : UserControl{
         ContChart.SetData(ContDateTime.GetData());
     }
 
-    private void ContDateTimeOnDataChange(object? sender, DataChangedEventArgsContDateTimeInfo e){
-        ContDateTimeInfo data = e.NewValue;
+    private void ContDateTimeOnDataChange(object? sender, ContDateTimeInfo newValue){
+        ContDateTimeInfo data = newValue;
         ContChart.SetData(data);
         Log.Information(
             "Start:{DataStartUnixTime} End:{DataEndUnixTime} Symbol:{DataSymbol} Period:{DataPeriod}",

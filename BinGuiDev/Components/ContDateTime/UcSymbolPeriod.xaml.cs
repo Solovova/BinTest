@@ -15,8 +15,8 @@ public partial class UcSymbolPeriod : UserControl{
     private bool _suppressTextChanged;
     public SymbolCollection SymbolCollection{ get; } = new();
 
-    public event EventHandler<DataChangedEventArgsString>? PeriodChanged;
-    public event EventHandler<DataChangedEventArgsString>? SymbolChanged;
+    public event EventHandler<string>? PeriodChanged;
+    public event EventHandler<string>? SymbolChanged;
 
     public UcSymbolPeriod(){
         
@@ -77,7 +77,7 @@ public partial class UcSymbolPeriod : UserControl{
         }
 
         ButtonGroup.Tag = null;
-        PeriodChanged?.Invoke(this, new DataChangedEventArgsString(_period));
+        PeriodChanged?.Invoke(this, _period);
     }
 
     private void ComboBoxSymbol_OnSelectionChanged(object sender, SelectionChangedEventArgs e){
@@ -85,7 +85,7 @@ public partial class UcSymbolPeriod : UserControl{
 
         if (_suppressTextChanged) return;
         _symbol = ComboBoxSymbol.SelectedItem?.ToString() ?? string.Empty;
-        SymbolChanged?.Invoke(this, new DataChangedEventArgsString(_symbol));
+        SymbolChanged?.Invoke(this, _symbol);
 
         ComboBoxSymbol.IsDropDownOpen = false;
         DependencyObject? scope = FocusManager.GetFocusScope(ComboBoxSymbol);
