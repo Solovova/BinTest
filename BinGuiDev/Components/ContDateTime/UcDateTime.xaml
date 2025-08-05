@@ -10,6 +10,9 @@
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="145">
 
+    
+
+    
     <Grid Height="100" Width="145" Background="#212121" x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50" />
@@ -20,7 +23,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="01.02.25" FontSize="16" Margin="5"
+        <DatePicker 
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="01.02.25" FontSize="16" Margin="5"
                     SelectedDateFormat="Short"
                     x:FieldModifier="private"
                     x:Name="DatePicker"

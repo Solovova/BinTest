@@ -1,9 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using Serilog;
 
 namespace BinGuiDev.Components.ContDateTime;
 
@@ -14,12 +12,10 @@ public partial class UcSymbolPeriod : UserControl{
 
     private bool _suppressTextChanged;
     public SymbolCollection SymbolCollection{ get; } = new();
-
     public event EventHandler<string>? PeriodChanged;
     public event EventHandler<string>? SymbolChanged;
 
     public UcSymbolPeriod(){
-        
         InitializeComponent();
         DataContext = this;
         Loaded += UcSymbolPeriod_Loaded;
@@ -38,7 +34,6 @@ public partial class UcSymbolPeriod : UserControl{
         foreach (ToggleButton button in ButtonGroup.Children.OfType<ToggleButton>()){
             button.IsChecked = (_period == (string)button.Content);
         }
-
         _suppressTextChanged = false;
     }
 

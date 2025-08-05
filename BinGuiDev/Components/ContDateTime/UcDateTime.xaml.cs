@@ -12,8 +12,7 @@ public partial class UcDateTime : UserControl{
 
     //DateTime
     private long _unixTime;
-
-    private bool _suppressTextChanged = false;
+    private bool _suppressTextChanged;
 
 
     private void ManualDateTimeChanged(){

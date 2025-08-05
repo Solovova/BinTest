@@ -11,7 +11,6 @@ public partial class UcDuration : UserControl{
     private bool _suppressTextChanged;
 
     public event EventHandler<bool>? EnableChanged;
-
     public event EventHandler<long>? DataChanged;
     public event EventHandler<long>? ClickLeftRight;
 
